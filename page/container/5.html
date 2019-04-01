@@ -101,6 +101,11 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="anggotadaops">Daops:</label>
+          <select class="form-control" id="selectDaops">
+          </select>
+        </div>
+        <div class="form-group">
           <label for="nama">Email:</label>
           <input type="email" class="form-control" required="true" id="email">
         </div>
@@ -161,6 +166,7 @@
   var provinsi;
   var anggota;
   var grup;
+  var anggotadaops;
 
   $(document).ready(function() {
     $.ajax({
@@ -193,6 +199,24 @@
         grup = response.data;
         $.each( response.data, function( key, value ) {
           $('#selectGrup').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.anggota.daops,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        anggotadaops = response.data;
+        $.each( anggotadaops, function( key, value ) {
+          $('#selectDaops').append(new Option(value.nama,value.id));
         });
       },
       dataType: 'json',
@@ -292,12 +316,12 @@
           function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
           },
-          success:
-          function (response) {
-            `navbarClick(5);`
-          },
-          dataType: 'json',
-          async:false
+        success:
+        function (response) {
+          navbarClick(5);
+        },
+        dataType: 'json',
+        async:false
         });
 
     }
@@ -312,6 +336,7 @@
         type: 'POST',
         url: urls.anggota.create,
         data: { kategori_anggota_id: $("#selectGrup option:selected").val(),
+                daops_id: $("#selectDaops option:selected").val(),
                 nama: $('#namaAnggota').val(),
                 email: $('#email').val(),
                 no_telepon: $('#no_telepon').val()

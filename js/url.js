@@ -9,8 +9,16 @@ var urls = {
   anggota:{
     list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/list",
     kategori: "http://ci.apps.cs.ipb.ac.id/siavipala/api/kategori-anggota/list",
+    daops: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
     create:"http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/create",
     delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/delete"
+  },
+
+  pengguna:{
+    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/list",
+    create:"http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/create",
+    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/delete",
+    role: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role/list"
   },
   provinsi:{
     list:"http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/list",
@@ -21,6 +29,11 @@ var urls = {
     list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
     create: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/create",
     delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/delete"
+  },
+  roleuser:{
+    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/list",
+    assign: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/assign-role-user",
+    unassign: "http://ci.apps.cs.ipb.ac.id/siavipala/api/api/role-user/unassign-role-user"
   }
 };
 
@@ -252,6 +265,16 @@ var API = {
         default:{},
         dependent:'login'
       },
+      daops:{
+        name:'Anggota -> Daops',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
+        type:'child',
+        method:'GET',
+        returnType:'json',
+        input:[],
+        default:{},
+        dependent:'login'
+      },
       create:{
         name:'Anggota -> Create',
         url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/create",
@@ -260,6 +283,10 @@ var API = {
         returnType:'json',
         input:[
           { name:'kategori_anggota_id',
+            type:'number',
+            null:false
+          },
+          { name:'daops_id',
             type:'number',
             null:false
           },
@@ -285,8 +312,138 @@ var API = {
         dependent:'login'
       },
       delete:{
-        name:'Anggota delete',
+        name:'Anggota -> delete',
         url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/delete",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'id',
+            type:'number',
+            null:false
+          }
+        ],
+        default:{
+          id:0
+        },
+        dependent:'login'
+      }
+    }
+  },
+  pengguna:{
+    type:'parent',
+    childs:{
+      list:{
+        name:'Pengguna-> List',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/list",
+        type:'child',
+        method:'GET',
+        returnType:'json',
+        input:[],
+        default:{},
+        dependent:'login'
+      },
+      create:{
+        name:'Anggota -> Create',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/create",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'nama',
+            type:'text',
+            null:false
+          },
+          { name:'email',
+            type:'email',
+            null:false
+          },
+          { name:'password',
+            type:'password',
+            null:false
+          }
+        ],
+        default:{
+          kategori_anggota_id:2,
+          nama:'test pengguna',
+          email:'test@test.com',
+          password:'123'
+        },
+        dependent:'login'
+      },
+      delete:{
+        name:'Anggota -> delete',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/delete",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'id',
+            type:'number',
+            null:false
+          }
+        ],
+        default:{
+          id:0
+        },
+        dependent:'login'
+      },
+      role:{
+        name:'Role-Pengguna -> List',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role/list",
+        type:'child',
+        method:'GET',
+        returnType:'json',
+        input:[],
+        default:{},
+        dependent:'login'
+      }
+    }
+  },
+  roleuser:{
+    type:'parent',
+    childs:{
+      list:{
+        name:'Role-User -> List',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/list",
+        type:'child',
+        method:'GET',
+        returnType:'json',
+        input:[],
+        default:{},
+        dependent:'login'
+      },
+      assign:{
+        name:'Role-User -> Assign',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/assign-role-user",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'nama',
+            type:'text',
+            null:false
+          },
+          { name:'email',
+            type:'email',
+            null:false
+          },
+          { name:'password',
+            type:'password',
+            null:false
+          }
+        ],
+        default:{
+          kategori_anggota_id:2,
+          nama:'test pengguna',
+          email:'test@test.com',
+          password:'123'
+        },
+        dependent:'login'
+      },
+      unassign:{
+        name:'Role User-> unassign',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/unassign-role-user",
         type:'child',
         method:'POST',
         returnType:'json',

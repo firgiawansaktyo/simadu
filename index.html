@@ -69,6 +69,12 @@
             <span class="nav-link-text">Manajemen Tim Patroli</span>
           </a>
         </li>
+        <li id="nav6" onclick="navbarClick(6);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Pengguna">
+          <a class="nav-link" href="#">
+            <i class="fas fa-user"></i>
+            <span class="nav-link-text">Manajemen Pengguna</span>
+          </a>
+        </li>
       </ul>
 
       <ul class="navbar-nav sidenav-toggler">
@@ -157,7 +163,8 @@
     navbarClick(2);
 
     if(localStorage.getItem("token")!=null)
-    { $('#nav6').removeClass("d-none");
+    { 
+      // $('#nav6').removeClass("d-none");
       $('#nav7').removeClass("d-none");
       $('#loginButton').addClass("d-none");
       $('#logoutButton').removeClass("d-none");
@@ -165,7 +172,9 @@
       $('#userDetail').html('<i class="fas fa-user-alt"></i> &nbsp; Hai, '+localStorage.getItem("user")+' &nbsp; &nbsp;');
     }
     else
-    { $('#nav4').addClass("d-none");
+    { 
+      $('#nav6').addClass("d-none");
+      $('#nav4').addClass("d-none");
       $('#nav5').addClass("d-none");
       $('#loginButton').removeClass("d-none");
       $('#logoutButton').addClass("d-none");
@@ -177,7 +186,7 @@
   });
 
   function navbarClick(val) {
-    for(var i=1; i<=5 ; i++){
+    for(var i=1; i<=6 ; i++){
       $('#nav'+i).removeClass('active');
     }
     $('#nav'+val).addClass('active');

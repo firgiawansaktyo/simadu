@@ -1,0 +1,257 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-user"></i> &nbsp; Manajemen Tim Patroli
+  </div>
+  <div class="card-body">
+    <div class="row">
+<!--       <div class="col-lg-6 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Pengguna
+            <a target="#" data-toggle="modal" data-target="#penggunaModal" class="btn btn-primary btn-sm float-right text-white">Tambah Pengguna</a>
+          </div>
+          <div class="card-body">
+            <table id="listPengguna">
+              <thead>
+                <tr>
+                    <th width="35%">Nama Pengguna</th>
+                    <th width="30%">Email</th>
+                    <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-lg-12 card-body">
+        <div class="card">
+          <div class="card-header">
+            Role Pengguna
+            <a target="#"  data-toggle="modal" data-target="#penggunaModal" class="btn btn-primary btn-sm float-right text-white">Tambah Pengguna</a>
+          </div>
+          <div class="card-body">
+            <table id="listPengguna">
+              <thead>
+                <tr>
+                    <th width="35%">Nama</th>
+                    <th width="35%">Email</th>
+                    <th width="35%">Role</th>
+                    <th>Unassigned Role</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="penggunaModal" tabindex="-1" role="dialog" aria-labelledby="penggunaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="penggunaModalLabel">Tambah Pengguna?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="namaPengguna" required="true">
+        </div>
+        <div class="form-group">
+          <label for="nama">Email:</label>
+          <input type="email" class="form-control" required="true" id="email">
+        </div>
+        <div class="form-group">
+          <label for="role">Role:</label>
+          <select class="form-control" id="selectRole">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nama">Password:</label>
+          <input type="password" class="form-control" required="true" id="password">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddPengguna();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roleModalLabel">Masukkan Role Pengguna ?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="namaPengguna" required="true">
+        </div>
+        <div class="form-group">
+          <label for="nama">Email:</label>
+          <input type="email" class="form-control" required="true" id="email">
+        </div>
+        <div class="form-group">
+          <label for="nama">Password:</label>
+          <input type="password" class="form-control" required="true" id="password">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddPengguna();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<script>
+  var tblPengguna = $("#listPengguna").DataTable();
+  var pengguna;
+
+  // var tblRoleUser = $("#listRoleUser").DataTable();
+  // var roles;
+
+  $(document).ready(function() {
+    // $.ajax({
+    //   type: 'GET',
+    //   url: urls.pengguna.list,
+    //   beforeSend:
+    //   function(xhr, settings) {
+    //     xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+    //   },
+    //   success:
+    //   function (response) {
+    //     pengguna = response.data
+    //   },
+    //   dataType: 'json',
+    //   async:false
+    // });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.roleuser.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        roles = response.roles
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    // $.each(pengguna, function( key, value ) {
+    //   tblPengguna.row.add( [
+    //           value.nama,
+    //           value.email,
+    //           '<center><a onClick="deletePengguna(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+    // });
+
+ // $.each(roles, function( key, value ) {
+ //      tblRoleUser.row.add( [
+ //              value.display_name,
+ //              '<center><a onClick="deletePengguna(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+ //          ] ).draw( false );
+ //    });
+    var role ;
+    $.each(roles, function( key, value ) {
+      role = value.display_name;
+      // alert(role);
+      $.each(value.role_user, function( key2, value2 ) {
+
+      tblPengguna.row.add( [
+              value2.pengguna.nama,
+              value2.pengguna.email,
+              role,
+              '<center><a onClick="deletePengguna(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+      });
+    });
+  });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.pengguna.role,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        role = response.roles;
+        $.each( role, function( key, value ) {
+          $('#selectRole').append(new Option(value.display_name,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+  function actionAddPengguna() {
+    $('#penggunaModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.pengguna.create,
+        data: { 
+                nama: $('#namaPengguna').val(),
+                email: $('#email').val(),
+                role_id: $("#selectRole option:selected").val(),
+                password: $('#password').val()
+              },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(6);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+  function deletePengguna(val) {
+    if (confirm("Hapus Pengguna?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.pengguna.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+          success:
+          function (response) {
+            navbarClick(6);
+          },
+          dataType: 'json',
+          async:false
+        });
+
+    }
+  }
+
+
+</script>
