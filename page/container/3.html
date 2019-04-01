@@ -1,0 +1,88 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-lg-8"><i class="fa fa-database text-left"></i> &nbsp; Data Provinsi</div>
+      <div class="col-lg-4 d-flex flex-row-reverse">
+        <select class="" id="selectProvinsi">
+        </select>
+        <label>Pilih Provinsi &nbsp</label>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-4">
+        <div id="info">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th colspan="2" class="text-left font-weight-bold text-warning">Statistik Hari Ini <label id="date"></label> </th>
+              </tr>
+              <tr>
+                <td><i class="fas fa-map-marker-alt text-warning"></i> &nbsp; Kemunculan Hotspot</td>
+                <td id="harian_hotspot">: 0</td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-map-marker-alt text-success"></i> &nbsp; Patroli Darat</td>
+                <td id="harian_patroli">: 0</td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-map-marker-alt text-primary"></i> &nbsp; Patroli Udara</td>
+                <td id="harian_udara">: 0</td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-map-marker-alt text-danger"></i> &nbsp; Terjadi Kebakaran</td>
+                <td id="harian_bakar">: 0</td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+              </tr>
+              <tr>
+                <td valign="center" class="text-left font-weight-bold text-primary" id="judulProvinsi">Statistik Provinsi</td>
+                <td>
+                  <div class="ui-widget">
+                    <select class="form-control" id="tahun">
+                      <option selected>2019</option>
+                      <option>2018</option>
+                      <option>2017</option>
+                      <option >2016</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Jumlah Daops (Daerah Operasi)</td>
+                <td id="jml_daops">: 0</td>
+              </tr>
+              <tr>
+                <td>Total Kemunculan Hotspot</td>
+                <td>: API not ready</td>
+              </tr>
+              <tr>
+                <td>Total Kejadian Kebakaran</td>
+                <td id="jml_bakar">: 0</td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+              </tr>
+              <tr>
+                <th colspan="2" class="text-left font-weight-bold text-danger">Hotspot Seminggu Terakhir</th>
+              </tr>
+              <tr>
+                <th colspan="2" class="text-center">
+                  <div id="chart1" style="width:100%; height:200px;"></div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div id="mainMaps" class="mainMaps"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="./page/js/3.js"></script>

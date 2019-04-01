@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Front-End Visualisasi Kebakaran Hutan dan Lahan Wilayah Sumatera dan Kalimantan">
+  <meta name="author" content="Deny Ramdhany">
+  <link rel="shortcut icon" href="#" />
+
+  <title>Sistem Informasi Monitoring Patroli Terpadu</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href="./css/sb-admin.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://www.flotcharts.org/flot/jquery.flot.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="./html2pdf/dist/html2pdf.bundle.js"></script>
+  <script src="./js/url.js"></script>
+
+  <style>
+    #mainMaps {
+      height: 100%;
+    }
+  </style>
+
+</head>
+
+<body class="sticky-footer bg-dark" id="page-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="">SIMADU Test Page</a>
+    <ul class="navbar-nav ml-auto">
+      <li id="startButton" class="nav-item">
+        <a class="nav-link btn" data-toggle="modal"onclick="startTest();">
+          <i class="fas fa-play"></i> &nbsp; Start Testing</a>
+      </li>
+    </ul>
+  </nav>
+  <br><br><br>
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-check text-success text-left"></i> &nbsp; API Test Result
+          </div>
+          <div class="card-body">
+            <table class="table" id="tabel">
+              <thead>
+                <tr>
+                  <th scope="col">API</th>
+                  <th scope="col" width=15%>Method</th>
+                  <th scope="col">Response</th>
+                  <th scope="col" width=15%>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-map text-primary text-left"></i> &nbsp; Maps Testing
+          </div>
+          <div class="card-body">
+            <div id="mainMaps"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Google Maps Script-->
+</body>
+
+<script type="text/javascript">
+  var tblTest = $("#tabel").DataTable();
+
+  $(document).ready(function() {
+    localStorage.clear();
+    new google.maps.Map(document.getElementById('mainMaps'), {
+      center: {lat: -0.892, lng: 106.924},
+      mapTypeId:"hybrid",
+      zoom: 6
+    });
+
+    $.each(API, function( key, value ) {
+      if(value.type=='child') send(value.name,value.method,value.url,value.default);
+      else
+      { $.each(value.childs, function( key2, value2 ) {
+          send(value2.name,value2.method,value2.url,value2.default);
+        });
+      }
+    });
+
+    //send(API.login.name,API.login.method,API.login.url,API.login.default);
+  });
+
+  function send(name, method, url, data={}) {
+    var code,text="";
+
+    $.ajax({
+      type: method,
+      url: url,
+      data: data,
+      beforeSend: function(xhr, settings) {
+        if(localStorage.getItem("token")!=null)
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success: function(data, textStatus, xhr) {
+        code = xhr.status;
+        text = textStatus;
+        if(data.data.token!=null)
+          localStorage.setItem("token",data.data.token);
+      },
+      error: function(data) {
+        code = data.status;
+        text = data.responseText;
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    var html = '<center><p class="text-success">'+code+' OK</p></center>';
+    if(code!=200) html = '<center><p class="text-danger">error '+code+'</p></center>';
+    if(text.substring(0, 4)=='%PDF') text = "PDF files";
+    tblTest.row.add([name, method, text, html]).draw( false );
+  }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG1wy8E-WZuD5kvCYMODyh9fZ2RConDkQ&region=ID&language=id" async defer></script>
+</html>

@@ -1,0 +1,147 @@
+<style>
+  .card-columns{
+    column-count: 5;
+  }
+
+  tr{
+    page-break-inside: avoid;
+  }
+</style>
+
+<div class="card mb-3">
+  <div class="card-header bg-light">
+    <div class="row">
+      <div class="col-sm-9 text-left">
+        <i class="fa fa-clock text-left"></i> &nbsp; 5 Laporan Teratas
+      </div>
+      <div class="col-sm-3 form-inline d-flex flex-row-reverse">
+        <input id="datepicker" width="200" readonly/> Tanggal Patroli &nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="card-body bg-secondary">
+    <div class="card-columns">
+      <div id="card1" class="card text-center">
+        <div class="card-header">
+          <i class="fa fa-fw fa-file-pdf fa-5x text-danger btn disabled"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Belum Ada Laporan</p>
+        </div>
+      </div>
+      <div id="card2" class="card text-center">
+        <div class="card-header">
+          <i class="fa fa-fw fa-file-pdf fa-5x text-danger btn disabled"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Belum Ada Laporan</p>
+        </div>
+      </div>
+      <div id="card3" class="card text-center">
+        <div class="card-header">
+          <i class="fa fa-fw fa-file-pdf fa-5x text-danger btn disabled"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Belum Ada Laporan</p>
+        </div>
+      </div>
+      <div id="card4" class="card text-center">
+        <div class="card-header">
+          <i class="fa fa-fw fa-file-pdf fa-5x text-danger btn disabled"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Belum Ada Laporan</p>
+        </div>
+      </div>
+      <div id="card5" class="card text-center">
+        <div class="card-header">
+          <i class="fa fa-fw fa-file-pdf fa-5x text-danger btn disabled"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Belum Ada Laporan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card mb-3 col-lg-7">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-sm-9 text-left">
+          <i class="fa fa-file-pdf text-left"></i> &nbsp; Laporan Patroli Harian
+        </div>
+      </div>
+    </div>
+    <div class="card-body table-responsive">
+      <table id="listFile" class="table table-striped">
+        <thead>
+          <tr>
+              <th>Daops</th>
+              <th>Provinsi</th>
+              <th>Download</th>
+              <th>Riwayat</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-5 card-mb-3">
+    <div class="card-header">
+      <i class="fa fa-file-pdf text-left"></i> &nbsp; Laporan Patroli Provinsi
+    </div>
+    <div class="card-body table-responsive">
+      <table id="listProvinsi" class="table table-striped">
+        <thead>
+          <tr>
+              <th>Provinsi</th>
+              <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-custom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel">Riwayat
+      </div>
+      <div class="modal-body">
+        <table border="0">
+          <tr>
+            <td>Tanggal Patroli</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="tgl-patroli"></td>
+          </tr>
+          <tr>
+            <td>Patroli Darat</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="jml-darat"></td>
+          </tr>
+          <tr>
+            <td>Patroli Udara</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="jml-udara"></td>
+          </tr>
+        </table>
+        <hr>
+        <div id="mainMaps" class="mainMaps" style="height:50%;"></div>
+      </div>
+      <div class="modal-footer">
+        <p class="text-muted">hotspot dengan titik yang sama, hanya akan tampil satu kali pada peta</p>
+        <button class="btn btn-danger" type="button" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+<script src="./page/js/4.js"></script>

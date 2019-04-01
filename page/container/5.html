@@ -1,0 +1,354 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-user-friends"></i> &nbsp; Manajemen Tim Patroli
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Anggota Tim Patroli
+            <a target="#" data-toggle="modal" data-target="#anggotaModal" class="btn btn-primary btn-sm float-right text-white">Tambah Anggota</a>
+          </div>
+          <div class="card-body">
+            <table id="listAnggota">
+              <thead>
+                <tr>
+                    <th width="35%">Nama Petugas</th>
+                    <th>Instansi</th>
+                    <th width="30%">Email</th>
+                    <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Daerah Operasi
+            <a target="#"  data-toggle="modal" data-target="#daopsModal" class="btn btn-primary btn-sm float-right text-white">Tambah Daops</a>
+          </div>
+          <div class="card-body">
+            <table id="listDaops">
+              <thead>
+                <tr>
+                    <th width="35%">Nama</th>
+                    <th width="35%">Provinsi</th>
+                    <th>Lihat Riwayat</th>
+                    <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="daopsModal" tabindex="-1" role="dialog" aria-labelledby="daopsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="daopsModalLabel">Tambah Daops?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="provinsi">Provinsi:</label>
+          <select class="form-control" id="selectProvinsi">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="nama" required="true">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddDaops();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="anggotaModal" tabindex="-1" role="dialog" aria-labelledby="anggotaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="anggotaModalLabel">Tambah Anggota?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="namaAnggota" required="true">
+        </div>
+        <div class="form-group">
+          <label for="grup">Kategori:</label>
+          <select class="form-control" id="selectGrup">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nama">Email:</label>
+          <input type="email" class="form-control" required="true" id="email">
+        </div>
+        <div class="form-group">
+          <label for="nama">No Telepon</label>
+          <input type="text" class="form-control" required="true" id="no_telepon">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddAnggota();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="anggotaModal" tabindex="-1" role="dialog" aria-labelledby="anggotaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="anggotaModalLabel">Tambah Anggota?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="namaAnggota" required="true">
+        </div>
+        <div class="form-group">
+          <label for="grup">Kategori:</label>
+          <select class="form-control" id="selectGrup">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nama">Email:</label>
+          <input type="email" class="form-control" required="true" id="email">
+        </div>
+        <div class="form-group">
+          <label for="nama">No Telepon</label>
+          <input type="text" class="form-control" required="true" id="no_telepon">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddAnggota();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var tblAnggota = $("#listAnggota").DataTable();
+  var tblDaops = $("#listDaops").DataTable();
+
+  var daops;
+  var provinsi;
+  var anggota;
+  var grup;
+
+  $(document).ready(function() {
+    $.ajax({
+      type: 'GET',
+      url: urls.provinsi.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        provinsi = response.data;
+        $.each( response.data, function( key, value ) {
+          $('#selectProvinsi').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.anggota.kategori,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        grup = response.data;
+        $.each( response.data, function( key, value ) {
+          $('#selectGrup').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.anggota.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        anggota = response.data
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.each(anggota, function( key, value ) {
+      $.each(grup, function( key2, value2 ) {
+        if(value2.id==value.kategori_anggota_id)
+        { value.kategori_anggota_id = value2.nama;
+        }
+      });
+
+      tblAnggota.row.add( [
+              value.nama,
+              value.kategori_anggota_id,
+              value.email,
+              '<center><a onClick="deleteAnggota(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.daops.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        daops = response.data
+      },
+      dataType: 'json',
+      async:false
+    });
+    $.each(daops, function( key, value ) {
+      $.each(provinsi, function( key2, value2 ) {
+        if(value2.id==value.provinsi_id)
+        { value.provinsi_id = value2.nama;
+        }
+      });
+
+      tblDaops.row.add( [
+              value.nama,
+              value.provinsi_id,
+              '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
+              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+    });
+
+  });
+
+  function actionAddDaops() {
+    $('#daopsModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.daops.create,
+        data: { provinsi_id: $("#selectProvinsi option:selected").val(), nama: $('#nama').val() },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(5);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+  function deleteDaops(val) {
+    if (confirm("Hapus Daops?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.daops.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+          success:
+          function (response) {
+            `navbarClick(5);`
+          },
+          dataType: 'json',
+          async:false
+        });
+
+    }
+  }
+
+  function actionAddAnggota() {
+    $('#anggotaModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.anggota.create,
+        data: { kategori_anggota_id: $("#selectGrup option:selected").val(),
+                nama: $('#namaAnggota').val(),
+                email: $('#email').val(),
+                no_telepon: $('#no_telepon').val()
+              },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(5);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+  function deleteAnggota(val) {
+    if (confirm("Hapus Anggota?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.anggota.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+          success:
+          function (response) {
+            navbarClick(5);
+          },
+          dataType: 'json',
+          async:false
+        });
+
+    }
+  }
+
+
+</script>

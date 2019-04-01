@@ -1,0 +1,69 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-9 text-left">
+        <i class="fa fa-circle text-danger"></i> &nbsp; Sipongi Live Update
+      </div>
+      <div class="col-sm-3 form-inline d-flex flex-row-reverse">
+        <input id="btn-ringkasan" type="button" value="Lihat Ringkasan" data-toggle="modal" data-target="#detailModal" class="btn btn-sm btn-primary">&nbsp;&nbsp;
+        <select class="form-control form-control-small" id="range">
+          <option id="r1" value="1" selected>LIVE (Hari Ini)</option>
+          <option id="r2" value="2">7 Hari Terakhir</option>
+          <option id="r3" value="3">30 Hari Terakhir</option>
+          <option id="r4" value="4"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div id="mainMaps" class="mainMaps"></div>
+  </div>
+</div>
+
+<!-- Login Modal-->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-custom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel">Ringkasan Sebaran Hotspot Hari Ini
+      </div>
+      <div class="modal-body">
+        <table border="0">
+          <tr>
+            <td>Hotspot Terdeteksi</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="jumlah-hotspot"></td>
+          </tr>
+          <tr>
+            <td>Paling Banyak</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="banyak-hotspot"></td>
+          </tr>
+          <tr>
+            <td>Paling Sedikit</td>
+            <td> &nbsp; :  &nbsp; </td>
+            <td id="dikit-hotspot"></td>
+          </tr>
+        </table>
+        <hr>
+        <table id="sebaran" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Jumlah Titik</th>
+              <th>Provinsi</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <p class="text-muted">hotspot dengan titik yang sama, hanya akan tampil satu kali pada peta</p>
+        <button class="btn btn-danger" type="button" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./page/js/1.js"></script>
