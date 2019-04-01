@@ -1,5 +1,4 @@
 var APIKey = "AIzaSyAG1wy8E-WZuD5kvCYMODyh9fZ2RConDkQ";
-// var baseUrl = "http://ci.apps.cs.ipb.ac.id/siavipala/api/";
 var urls = {
   sipongi:"https://cors-anywhere.herokuapp.com/http://sipongi.menlhk.go.id/action/indohotspot",
   login: "http://ci.apps.cs.ipb.ac.id/siavipala/api/auth/login",
@@ -28,8 +27,8 @@ var urls = {
 var API = {
   sipongi:{
     name:'sipongi API',
-    url:"https://cors-anywhere.herokuapp.com/http://sipongi.menlhk.go.id/action/indohotspot",
-    url: "hotspot-sipongi/date-range",
+    // url:"https://cors-anywhere.herokuapp.com/http://sipongi.menlhk.go.id/action/indohotspot",
+    url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/hotspot-sipongi/date-range",
     type:'child',
     method:'GET',
     returnType:'json',
