@@ -37,7 +37,7 @@ function loadHotspot(start,end) {
     },
     success:
     function (response) {
-      if(response.hostspot_sipongi.length!=0)
+      if(response.hostspot_sipongi.length !=null )
          spots = response.hostspot_sipongi;
 
       initMap();
