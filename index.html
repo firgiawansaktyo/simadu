@@ -75,6 +75,12 @@
             <span class="nav-link-text">Manajemen Pengguna</span>
           </a>
         </li>
+        <li id="nav7" onclick="navbarClick(7);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Daerah">
+          <a class="nav-link" href="#">
+            <i class="fas fa-map-marker-alt"></i>
+            <span class="nav-link-text">Manajemen Daerah Patroli</span>
+          </a>
+        </li>
       </ul>
 
       <ul class="navbar-nav sidenav-toggler">
@@ -165,7 +171,7 @@
     if(localStorage.getItem("token")!=null)
     { 
       // $('#nav6').removeClass("d-none");
-      $('#nav7').removeClass("d-none");
+      // $('#nav7').removeClass("d-none");
       $('#loginButton').addClass("d-none");
       $('#logoutButton').removeClass("d-none");
       $('#userDetail').removeClass("d-none");
@@ -173,6 +179,7 @@
     }
     else
     { 
+      $('#nav7').addClass("d-none");
       $('#nav6').addClass("d-none");
       $('#nav4').addClass("d-none");
       $('#nav5').addClass("d-none");
@@ -186,7 +193,7 @@
   });
 
   function navbarClick(val) {
-    for(var i=1; i<=6 ; i++){
+    for(var i=1; i<=7 ; i++){
       $('#nav'+i).removeClass('active');
     }
     $('#nav'+val).addClass('active');

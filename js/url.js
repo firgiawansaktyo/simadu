@@ -22,6 +22,8 @@ var urls = {
   },
   provinsi:{
     list:"http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/list",
+    create: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/create",
+    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/delete",
     resume: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/resume",
     hotspot: "http://ci.apps.cs.ipb.ac.id/siavipala/api/hotspot-sipongi/date-range"
   },
@@ -136,6 +138,40 @@ var API = {
         input:[],
         default:{},
         dependent:null
+      },
+      create:{
+        name:'Provinsi -> Create',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/create",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'nama',
+            type:'text',
+            null:false
+          }
+        ],
+        default:{
+          nama:'test'
+        },
+        dependent:'login'
+      },
+      delete:{
+        name:'Provinsi -> Delete',
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/delete",
+        type:'child',
+        method:'POST',
+        returnType:'json',
+        input:[
+          { name:'id',
+            type:'number',
+            null:false
+          }
+        ],
+        default:{
+          id:0
+        },
+        dependent:'login'
       },
       resume:{
         name:'Provinsi -> Resume',

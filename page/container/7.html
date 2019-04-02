@@ -1,0 +1,260 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-map-marker-alt"></i> &nbsp; Manajemen Daerah Patroli
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Provinsi
+            <a target="#" data-toggle="modal" data-target="#provinsiModal" class="btn btn-primary btn-sm float-right text-white">Tambah Provinsi</a>
+          </div>
+          <div class="card-body">
+            <table id="listProvinsi">
+              <thead>
+                <tr>
+                    <th width="50%">Provinsi</th>
+                    <th width="50%">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Daerah Operasi
+            <a target="#"  data-toggle="modal" data-target="#daopsModal" class="btn btn-primary btn-sm float-right text-white">Tambah Daops</a>
+          </div>
+          <div class="card-body">
+            <table id="listDaops">
+              <thead>
+                <tr>
+                    <th width="35%">Nama</th>
+                    <th width="35%">Provinsi</th>
+                    <th>Lihat Riwayat</th>
+                    <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="daopsModal" tabindex="-1" role="dialog" aria-labelledby="daopsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="daopsModalLabel">Tambah Daops?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="provinsi">Provinsi:</label>
+          <select class="form-control" id="selectProvinsi">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="nama" required="true">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddDaops();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="provinsiModal" tabindex="-1" role="dialog" aria-labelledby="provinsiModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="provinsiModalLabel">Tambah Provinsi?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="namaProvinsi">Nama Provinsi:</label>
+          <input type="text" class="form-control" id="namaProvinsi" required="true">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddProvinsi();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var tblProvinsi = $("#listProvinsi").DataTable();
+  var tblDaops = $("#listDaops").DataTable();
+  var daops;
+  var provinsi;
+
+
+  $(document).ready(function() {
+    $.ajax({
+      type: 'GET',
+      url: urls.provinsi.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        provinsi = response.data;
+        $.each( response.data, function( key, value ) {
+          $('#selectProvinsi').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.daops.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        daops = response.data
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.each(provinsi, function( key, value ) {
+      tblProvinsi.row.add( [
+              value.nama,
+              '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+    });
+
+
+    $.each(daops, function( key, value ) {
+      $.each(provinsi, function( key2, value2 ) {
+        if(value2.id==value.provinsi_id)
+        { value.provinsi_id = value2.nama;
+        }
+      });
+
+      tblDaops.row.add( [
+              value.nama,
+              value.provinsi_id,
+              '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
+              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+    });
+
+  });
+
+  function actionAddDaops() {
+    $('#daopsModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.daops.create,
+        data: { provinsi_id: $("#selectProvinsi option:selected").val(), nama: $('#nama').val() },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+  function actionAddProvinsi() {
+    $('#provinsiModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.provinsi.create,
+        data: { 
+          nama: $('#namaProvinsi').val() },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+  function deleteDaops(val) {
+    if (confirm("Hapus Daops?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.daops.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+        });
+
+    }
+  }
+  function deleteProvinsi(val) {
+    if (confirm("Hapus Provinsi?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.provinsi.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+        });
+
+    }
+  }
+
+
+
+</script>

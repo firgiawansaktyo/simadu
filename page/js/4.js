@@ -54,6 +54,7 @@ function loadFiles() {
     function (response) {
       data = null;
       data = response.data;
+      console.log(data);
     },
     dataType: 'json',
     async:false
