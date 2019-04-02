@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-lg-6 card-body">
+      <div class="col-lg-12 card-body">
         <div class="card">
           <div class="card-header">
             Daftar Anggota Tim Patroli
@@ -14,10 +14,12 @@
             <table id="listAnggota">
               <thead>
                 <tr>
-                    <th width="35%">Nama Petugas</th>
-                    <th>Instansi</th>
-                    <th width="30%">Email</th>
-                    <th>Aksi</th>
+                    <th width="20%">Nama Petugas</th>
+                    <th width="20%">Instansi</th>
+                    <th width="20%">Email</th>
+                    <th width="20%">Daops</th>
+                    <th width="20%">Provinsi</th>
+                    <th width="10%">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,7 +29,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6 card-body">
+      <div class="col-lg-12 card-body">
         <div class="card">
           <div class="card-header">
             Daftar Daerah Operasi
@@ -232,7 +234,7 @@
       },
       success:
       function (response) {
-        anggota = response.data
+        anggota = response.anggota
       },
       dataType: 'json',
       async:false
@@ -244,11 +246,18 @@
         { value.kategori_anggota_id = value2.nama;
         }
       });
+      $.each(provinsi, function( key3, value3 ) {
+        if(value3.id==value.anggota_daops.daops.provinsi_id)
+        { value.anggota_daops.daops.provinsi_id = value3.nama;
+        }
+      });
 
       tblAnggota.row.add( [
               value.nama,
               value.kategori_anggota_id,
               value.email,
+              value.anggota_daops.daops.nama,
+              value.anggota_daops.daops.provinsi_id,
               '<center><a onClick="deleteAnggota(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
     });

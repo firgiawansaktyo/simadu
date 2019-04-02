@@ -7,7 +7,7 @@ var urls = {
     laporan:"http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/unduh-laporan"
   },
   anggota:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/list",
+    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota-daops/list",
     kategori: "http://ci.apps.cs.ipb.ac.id/siavipala/api/kategori-anggota/list",
     daops: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
     create:"http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/create",
@@ -247,7 +247,7 @@ var API = {
     childs:{
       list:{
         name:'Anggota -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/list",
+        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota-daops/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -344,7 +344,7 @@ var API = {
         dependent:'login'
       },
       create:{
-        name:'Anggota -> Create',
+        name:'pengguna -> Create',
         url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/create",
         type:'child',
         method:'POST',
@@ -372,7 +372,7 @@ var API = {
         dependent:'login'
       },
       delete:{
-        name:'Anggota -> delete',
+        name:'pengguna -> delete',
         url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/delete",
         type:'child',
         method:'POST',
