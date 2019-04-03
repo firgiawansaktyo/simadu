@@ -67,178 +67,178 @@ function query() {
       $('#harian_bakar').html(": "+response.statistik_harian.kebakaran);
       $('#jml_daops').html(": "+response.statistik_tahunan.daops);
       $('#jml_bakar').html(": "+response.statistik_tahunan.kebakaran);
-      spotMingguan();
-      spotToday();
-      patroliToday();
+      // spotMingguan();
+      // spotToday();
+      // patroliToday();
     },
     dataType: 'json',
     async:true
   });
 
-  $.get("https://maps.googleapis.com/maps/api/geocode/json?language=ID&address="+namaLokasi+"&key="+APIKey, function(data){
-      latLng = data.results[0].geometry.location;
-  });
+  // $.get("https://maps.googleapis.com/maps/api/geocode/json?language=ID&address="+namaLokasi+"&key="+APIKey, function(data){
+  //     latLng = data.results[0].geometry.location;
+  // });
 
 }
 
-function spotMingguan() {
-  $.ajax({
-    type: 'GET',
-    url: API.sipongi.url,
-    data:{
-      end_date: $.format.date(today, "yyyy-MM-dd"),
-      start_date: $.format.date(week.setDate(today.getDate()-6), "yyyy-MM-dd"),
-      provinsi: namaLokasi
-    },
-    success:
-    function (response) {
-      spots.mingguan = null;
-      if(response.hostspot_sipongi.length!=0)
-         spots.mingguan = response.hostspot_sipongi;
-      drawChart();
-    },
-    dataType: 'json',
-    async:true
-  });
-}
+// function spotMingguan() {
+//   $.ajax({
+//     type: 'GET',
+//     url: API.sipongi.url,
+//     data:{
+//       end_date: $.format.date(today, "yyyy-MM-dd"),
+//       start_date: $.format.date(week.setDate(today.getDate()-6), "yyyy-MM-dd"),
+//       provinsi: namaLokasi
+//     },
+//     success:
+//     function (response) {
+//       spots.mingguan = null;
+//       if(response.hostspot_sipongi.length!=0)
+//          spots.mingguan = response.hostspot_sipongi;
+//       drawChart();
+//     },
+//     dataType: 'json',
+//     async:true
+//   });
+// }
 
-function spotToday() {
-  $.ajax({
-    type: 'GET',
-    url: API.sipongi.url,
-    data:{
-      end_date: $.format.date(today, "yyyy-MM-dd"),
-      start_date: $.format.date(today, "yyyy-MM-dd"),
-      provinsi: namaLokasi
-    },
-    success:
-    function (response) {
-      spots.today = [];
-      if(response.hostspot_sipongi.length!=0)
-         spots.today = response.hostspot_sipongi;
+// function spotToday() {
+//   $.ajax({
+//     type: 'GET',
+//     url: API.sipongi.url,
+//     data:{
+//       end_date: $.format.date(today, "yyyy-MM-dd"),
+//       start_date: $.format.date(today, "yyyy-MM-dd"),
+//       provinsi: namaLokasi
+//     },
+//     success:
+//     function (response) {
+//       spots.today = [];
+//       if(response.hostspot_sipongi.length!=0)
+//          spots.today = response.hostspot_sipongi;
 
-      $('#harian_hotspot').html(": "+spots.today.length);
-    },
-    dataType: 'json',
-    async:true
-  });
-}
+//       $('#harian_hotspot').html(": "+spots.today.length);
+//     },
+//     dataType: 'json',
+//     async:true
+//   });
+// }
 
-function patroliToday() {
-  $.ajax({
-    type: 'GET',
-    url: API.patroli.childs.list.url,
-    // data: { tanggal_patroli: test_day },
-    data: { tanggal_patroli: $.format.date(today, "yyyy-MM-dd") },
-    success:
-    function (response) {
-      $('#harian_patroli').html(": 0");
-      $('#harian_udara').html(": 0");
+// function patroliToday() {
+//   $.ajax({
+//     type: 'GET',
+//     url: API.patroli.childs.list.url,
+//     // data: { tanggal_patroli: test_day },
+//     data: { tanggal_patroli: $.format.date(today, "yyyy-MM-dd") },
+//     success:
+//     function (response) {
+//       $('#harian_patroli').html(": 0");
+//       $('#harian_udara').html(": 0");
 
-      spots.patroliToday = {};
-      spots.patroliToday.darat = [];
-      spots.patroliToday.udara = [];
-      $.each(response.data, function(key, value) {
-          if(value.patroli_darat.length>0 && value.patroli_darat[0].desa_kelurahan.kecamatan.kotakab.daops.provinsi.id==idProvinsi)
-          { spots.patroliToday.darat.push(value.patroli_darat);
-            $('#harian_patroli').html(": "+spots.patroliToday.darat.length);
-          }
-          if(value.patroli_udara.length>0 && value.patroli_udara[0].desa_kelurahan.kecamatan.kotakab.daops.provinsi.id==idProvinsi)
-          { spots.patroliToday.udara.push(value.patroli_udara);
-            $('#harian_udara').html(": "+spots.patroliToday.udara.length);
-          }
-        });
-        initMap();
-    },
-    dataType: 'json',
-    async:true
-  });
-}
+//       spots.patroliToday = {};
+//       spots.patroliToday.darat = [];
+//       spots.patroliToday.udara = [];
+//       $.each(response.data, function(key, value) {
+//           if(value.patroli_darat.length>0 && value.patroli_darat[0].desa_kelurahan.kecamatan.kotakab.daops.provinsi.id==idProvinsi)
+//           { spots.patroliToday.darat.push(value.patroli_darat);
+//             $('#harian_patroli').html(": "+spots.patroliToday.darat.length);
+//           }
+//           if(value.patroli_udara.length>0 && value.patroli_udara[0].desa_kelurahan.kecamatan.kotakab.daops.provinsi.id==idProvinsi)
+//           { spots.patroliToday.udara.push(value.patroli_udara);
+//             $('#harian_udara').html(": "+spots.patroliToday.udara.length);
+//           }
+//         });
+//         initMap();
+//     },
+//     dataType: 'json',
+//     async:true
+//   });
+// }
 
 
 
-function drawChart() {
-  week.setDate(today.getDate()+1);
-  for(var i=0; i<=6 ; i++){
-    var temp = week.setDate(week.getDate()-1);
-    xaxs[6-i] = $.format.date(temp, "dd-MMM");
-    xdata[6-i] = 0;
-    $.each(spots.mingguan, function(key0, value0) {
-      if(value0.tanggal==$.format.date(temp, "yyyy-MM-dd"))
-      { $.each(value0.sebaran_hotspot, function(key, value) {
-          if(value.provinsi.toLowerCase()==namaLokasi.toLowerCase()) xdata[6-i]++;
-        });
-      }
-    });
-  }
+// function drawChart() {
+//   week.setDate(today.getDate()+1);
+//   for(var i=0; i<=6 ; i++){
+//     var temp = week.setDate(week.getDate()-1);
+//     xaxs[6-i] = $.format.date(temp, "dd-MMM");
+//     xdata[6-i] = 0;
+//     $.each(spots.mingguan, function(key0, value0) {
+//       if(value0.tanggal==$.format.date(temp, "yyyy-MM-dd"))
+//       { $.each(value0.sebaran_hotspot, function(key, value) {
+//           if(value.provinsi.toLowerCase()==namaLokasi.toLowerCase()) xdata[6-i]++;
+//         });
+//       }
+//     });
+//   }
 
-  plot = $.plot($("#chart1"),
-    [ [[0,xdata[0]],[1,xdata[1]],[2,xdata[2]],[3,xdata[3]],[4,xdata[4]],[5,xdata[5]],[6,xdata[6]]] ],
-    { yaxis: {
-        max: Math.max.apply(Math,xdata)+2,
-        minTickSize: 1,
-        tickDecimals: 0
-      },
-      xaxis: {
-        minTickSize: 1,
-        tickDecimals: 0,
-        ticks: [[0,xaxs[0]],[1,xaxs[1]],[2,xaxs[2]],[3,xaxs[3]],[4,xaxs[4]],[5,xaxs[5]],[6,xaxs[6]]]
-      },
-      series: {
-        color: "#FF0000",
-        lines: {
-          show: true,
-          lineWidth: 4
-        },
-        points: {
-          show: true
-        }
-      },
-    });
-}
+//   plot = $.plot($("#chart1"),
+//     [ [[0,xdata[0]],[1,xdata[1]],[2,xdata[2]],[3,xdata[3]],[4,xdata[4]],[5,xdata[5]],[6,xdata[6]]] ],
+//     { yaxis: {
+//         max: Math.max.apply(Math,xdata)+2,
+//         minTickSize: 1,
+//         tickDecimals: 0
+//       },
+//       xaxis: {
+//         minTickSize: 1,
+//         tickDecimals: 0,
+//         ticks: [[0,xaxs[0]],[1,xaxs[1]],[2,xaxs[2]],[3,xaxs[3]],[4,xaxs[4]],[5,xaxs[5]],[6,xaxs[6]]]
+//       },
+//       series: {
+//         color: "#FF0000",
+//         lines: {
+//           show: true,
+//           lineWidth: 4
+//         },
+//         points: {
+//           show: true
+//         }
+//       },
+//     });
+// }
 
-function initMap() {
-  map = new google.maps.Map(document.getElementById('mainMaps'), {
-    center: latLng,
-    mapTypeId:"hybrid",
-    zoom: 8
-  });
+// function initMap() {
+//   map = new google.maps.Map(document.getElementById('mainMaps'), {
+//     center: latLng,
+//     mapTypeId:"hybrid",
+//     zoom: 8
+//   });
 
-  var marker = new Array();
+//   var marker = new Array();
 
-  if (spots != null){
-    $.each(spots.today, function( key0, value0 ) {
-      $.each(value0.sebaran_hotspot, function( key, value ) {
-        marker[value.id] = new google.maps.Marker({
-          position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
-          icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-        });
-        marker[value.id].setMap(map);
-      });
-    });
+//   if (spots != null){
+//     $.each(spots.today, function( key0, value0 ) {
+//       $.each(value0.sebaran_hotspot, function( key, value ) {
+//         marker[value.id] = new google.maps.Marker({
+//           position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
+//           icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+//         });
+//         marker[value.id].setMap(map);
+//       });
+//     });
 
-    $.each(spots.patroliToday.darat, function( key0, value0 ) {
-      $.each(value0, function( key, value ) {
-        marker[value.id] = new google.maps.Marker({
-          position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
-          icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-        });
-        marker[value.id].setMap(map);
-      });
-    });
+//     $.each(spots.patroliToday.darat, function( key0, value0 ) {
+//       $.each(value0, function( key, value ) {
+//         marker[value.id] = new google.maps.Marker({
+//           position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
+//           icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+//         });
+//         marker[value.id].setMap(map);
+//       });
+//     });
 
-    $.each(spots.patroliToday.udara, function( key0, value0 ) {
-      $.each(value0, function( key, value ) {
-        marker[value.id] = new google.maps.Marker({
-          position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
-          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-        });
-        marker[value.id].setMap(map);
-      });
-    });
+//     $.each(spots.patroliToday.udara, function( key0, value0 ) {
+//       $.each(value0, function( key, value ) {
+//         marker[value.id] = new google.maps.Marker({
+//           position: { lat: parseInt(value.latitude), lng: parseInt(value.longitude) },
+//           icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+//         });
+//         marker[value.id].setMap(map);
+//       });
+//     });
 
-  }
-}
+//   }
+// }
 
 $.widget( "custom.combobox", {
   _create: function() {
