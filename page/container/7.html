@@ -67,6 +67,11 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="kotakab">Kota/Kabupaten:</label>
+          <select class="form-control" id="selectKotaKab">
+          </select>
+        </div>
+        <div class="form-group">
           <label for="nama">Nama:</label>
           <input type="text" class="form-control" id="nama" required="true">
         </div>
@@ -111,6 +116,7 @@
 
 
   $(document).ready(function() {
+    var provinsi_id = null;
     $.ajax({
       type: 'GET',
       url: urls.provinsi.list,
@@ -143,7 +149,6 @@
       dataType: 'json',
       async:false
     });
-
     $.each(provinsi, function( key, value ) {
       tblProvinsi.row.add( [
               value.nama,
@@ -154,17 +159,40 @@
 
     $.each(daops, function( key, value ) {
       $.each(provinsi, function( key2, value2 ) {
-        if(value2.id==value.provinsi_id)
-        { value.provinsi_id = value2.nama;
+        if(value2.id===value.kota_kab.provinsi_id)
+        { 
+          value.kota_kab.provinsi_id = value2.nama;
         }
       });
 
       tblDaops.row.add( [
               value.nama,
-              value.provinsi_id,
+              value.kota_kab.provinsi_id,
               '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
               '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
+    });
+
+    $("#selectProvinsi").change(function () {
+      provinsi_id = $("#selectProvinsi option:selected").val();
+      $.ajax({
+      type: 'GET',
+      url: urls.kotaKab.list + '/' + provinsi_id,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        $('#selectKotaKab').empty();
+        $.each( response.data, function( key, value ) {
+          $('#selectKotaKab').append(new Option(value.nama,value.id));
+          console.log($('#selectKotaKab'));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
     });
 
   });
@@ -177,7 +205,7 @@
     $.ajax({
         type: 'POST',
         url: urls.daops.create,
-        data: { provinsi_id: $("#selectProvinsi option:selected").val(), nama: $('#nama').val() },
+        data: { kota_kab_id: $("#selectKotaKab option:selected").val(), nama: $('#nama').val() },
         beforeSend:
         function(xhr, settings) {
           xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));

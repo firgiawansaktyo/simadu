@@ -1,41 +1,44 @@
 var APIKey = "AIzaSyAG1wy8E-WZuD5kvCYMODyh9fZ2RConDkQ";
 var urls = {
   sipongi:"https://cors-anywhere.herokuapp.com/http://sipongi.menlhk.go.id/action/indohotspot?late=24&satelit=&confidence=50",
-  login: "http://ci.apps.cs.ipb.ac.id/siavipala/api/auth/login",
+  login: "http://localhost:8000/siavipala/api/auth/login",
   patroli:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/list",
-    laporan:"http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/unduh-laporan"
+    list: "http://localhost:8000/siavipala/api/patroli/list",
+    laporan:"http://localhost:8000/siavipala/api/patroli/unduh-laporan"
   },
   anggota:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota-daops/list",
-    kategori: "http://ci.apps.cs.ipb.ac.id/siavipala/api/kategori-anggota/list",
-    daops: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
-    create:"http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/create",
-    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/delete"
+    list: "http://localhost:8000/siavipala/api/anggota-daops/list",
+    kategori: "http://localhost:8000/siavipala/api/kategori-anggota/list",
+    daops: "http://localhost:8000/siavipala/api/daops/list",
+    create:"http://localhost:8000/siavipala/api/anggota/create",
+    delete: "http://localhost:8000/siavipala/api/anggota/delete"
   },
 
   pengguna:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/list",
-    create:"http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/create",
-    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/delete",
-    role: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role/list"
+    list: "http://localhost:8000/siavipala/api/pengguna/list",
+    create:"http://localhost:8000/siavipala/api/pengguna/create",
+    delete: "http://localhost:8000/siavipala/api/pengguna/delete",
+    role: "http://localhost:8000/siavipala/api/role/list"
   },
   provinsi:{
-    list:"http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/list",
-    create: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/create",
-    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/delete",
-    resume: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/resume",
-    hotspot: "http://ci.apps.cs.ipb.ac.id/siavipala/api/hotspot-sipongi/date-range"
+    list:"http://localhost:8000/siavipala/api/provinsi/list",
+    create: "http://localhost:8000/siavipala/api/provinsi/create",
+    delete: "http://localhost:8000/siavipala/api/provinsi/delete",
+    resume: "http://localhost:8000/siavipala/api/provinsi/resume",
+    hotspot: "http://localhost:8000/siavipala/api/hotspot-sipongi/date-range"
+  },
+  kotaKab:{
+    list:"http://localhost:8000/siavipala/api/kotakab/list",
   },
   daops:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
-    create: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/create",
-    delete: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/delete"
+    list: "http://localhost:8000/siavipala/api/daops/list",
+    create: "http://localhost:8000/siavipala/api/daops/create",
+    delete: "http://localhost:8000/siavipala/api/daops/delete"
   },
   roleuser:{
-    list: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/list",
-    assign: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/assign-role-user",
-    unassign: "http://ci.apps.cs.ipb.ac.id/siavipala/api/api/role-user/unassign-role-user"
+    list: "http://localhost:8000/siavipala/api/role-user/list",
+    assign: "http://localhost:8000/siavipala/api/role-user/assign-role-user",
+    unassign: "http://localhost:8000/siavipala/api/api/role-user/unassign-role-user"
   }
 };
 
@@ -43,7 +46,7 @@ var API = {
   sipongi:{
     name:'sipongi API',
     // url:"https://cors-anywhere.herokuapp.com/https://cors-anywhere.herokuapp.com/http://sipongi.menlhk.go.id/action/indohotspot",
-    url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/hotspot-sipongi/date-range",
+    url: "http://localhost:8000/siavipala/api/hotspot-sipongi/date-range",
     type:'child',
     method:'GET',
     returnType:'json',
@@ -57,7 +60,7 @@ var API = {
   },
   login:{
     name:'Login',
-    url:"http://ci.apps.cs.ipb.ac.id/siavipala/api/auth/login",
+    url:"http://localhost:8000/siavipala/api/auth/login",
     type:'child',
     method:'POST',
     returnType:'json',
@@ -82,7 +85,7 @@ var API = {
     childs:{
       list:{
         name:'Patroli -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/list",
+        url: "http://localhost:8000/siavipala/api/patroli/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -99,7 +102,7 @@ var API = {
       },
       laporan:{
         name:'Patroli -> Laporan',
-        url:"http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/unduh-laporan",
+        url:"http://localhost:8000/siavipala/api/patroli/unduh-laporan",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -131,7 +134,7 @@ var API = {
     childs:{
       list:{
         name:'Provinsi -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/list",
+        url: "http://localhost:8000/siavipala/api/provinsi/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -141,7 +144,7 @@ var API = {
       },
       create:{
         name:'Provinsi -> Create',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/create",
+        url: "http://localhost:8000/siavipala/api/provinsi/create",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -158,7 +161,7 @@ var API = {
       },
       delete:{
         name:'Provinsi -> Delete',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/delete",
+        url: "http://localhost:8000/siavipala/api/provinsi/delete",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -175,7 +178,7 @@ var API = {
       },
       resume:{
         name:'Provinsi -> Resume',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/provinsi/resume",
+        url: "http://localhost:8000/siavipala/api/provinsi/resume",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -197,7 +200,7 @@ var API = {
       },
       laporan:{
         name:'Patroli -> Laporan',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/patroli/unduh-rekapitulasi-laporan",
+        url: "http://localhost:8000/siavipala/api/patroli/unduh-rekapitulasi-laporan",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -224,12 +227,27 @@ var API = {
       }
     }
   },
+  kotaKab:{
+    type:'parent',
+    childs:{
+      list:{
+        name:'Kota/Kab -> List',
+        url: "http://localhost:8000/siavipala/api/kotakab/list",
+        type:'child',
+        method:'GET',
+        returnType:'json',
+        input:[],
+        default:{},
+        dependent:null
+      },
+    }
+  },
   daops:{
     type:'parent',
     childs:{
       list:{
         name:'Daops -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
+        url: "http://localhost:8000/siavipala/api/daops/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -239,7 +257,7 @@ var API = {
       },
       create:{
         name:'Daops -> Create',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/create",
+        url: "http://localhost:8000/siavipala/api/daops/create",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -261,7 +279,7 @@ var API = {
       },
       delete:{
         name:'Daops -> Delete',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/delete",
+        url: "http://localhost:8000/siavipala/api/daops/delete",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -283,7 +301,7 @@ var API = {
     childs:{
       list:{
         name:'Anggota -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota-daops/list",
+        url: "http://localhost:8000/siavipala/api/anggota-daops/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -293,7 +311,7 @@ var API = {
       },
       kategori:{
         name:'Anggota -> Kategori',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/kategori-anggota/list",
+        url: "http://localhost:8000/siavipala/api/kategori-anggota/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -303,7 +321,7 @@ var API = {
       },
       daops:{
         name:'Anggota -> Daops',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/daops/list",
+        url: "http://localhost:8000/siavipala/api/daops/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -313,7 +331,7 @@ var API = {
       },
       create:{
         name:'Anggota -> Create',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/create",
+        url: "http://localhost:8000/siavipala/api/anggota/create",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -349,7 +367,7 @@ var API = {
       },
       delete:{
         name:'Anggota -> delete',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/anggota/delete",
+        url: "http://localhost:8000/siavipala/api/anggota/delete",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -371,7 +389,7 @@ var API = {
     childs:{
       list:{
         name:'Pengguna-> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/list",
+        url: "http://localhost:8000/siavipala/api/pengguna/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -381,7 +399,7 @@ var API = {
       },
       create:{
         name:'pengguna -> Create',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/create",
+        url: "http://localhost:8000/siavipala/api/pengguna/create",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -409,7 +427,7 @@ var API = {
       },
       delete:{
         name:'pengguna -> delete',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/pengguna/delete",
+        url: "http://localhost:8000/siavipala/api/pengguna/delete",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -426,7 +444,7 @@ var API = {
       },
       role:{
         name:'Role-Pengguna -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role/list",
+        url: "http://localhost:8000/siavipala/api/role/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -441,7 +459,7 @@ var API = {
     childs:{
       list:{
         name:'Role-User -> List',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/list",
+        url: "http://localhost:8000/siavipala/api/role-user/list",
         type:'child',
         method:'GET',
         returnType:'json',
@@ -451,7 +469,7 @@ var API = {
       },
       assign:{
         name:'Role-User -> Assign',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/assign-role-user",
+        url: "http://localhost:8000/siavipala/api/role-user/assign-role-user",
         type:'child',
         method:'POST',
         returnType:'json',
@@ -479,7 +497,7 @@ var API = {
       },
       unassign:{
         name:'Role User-> unassign',
-        url: "http://ci.apps.cs.ipb.ac.id/siavipala/api/role-user/unassign-role-user",
+        url: "http://localhost:8000/siavipala/api/role-user/unassign-role-user",
         type:'child',
         method:'POST',
         returnType:'json',

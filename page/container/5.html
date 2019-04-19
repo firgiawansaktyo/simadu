@@ -276,16 +276,18 @@
       dataType: 'json',
       async:false
     });
+    console.log("daops", daops);
     $.each(daops, function( key, value ) {
       $.each(provinsi, function( key2, value2 ) {
-        if(value2.id==value.provinsi_id)
-        { value.provinsi_id = value2.nama;
+        if(value2.id===value.kotakab.provinsi_id)
+        { 
+          value.kotakab.provinsi_id = value2.nama;
         }
       });
 
       tblDaops.row.add( [
               value.nama,
-              value.provinsi_id,
+              value.kotakab.provinsi_id,
               '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
               '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
