@@ -239,16 +239,17 @@
       dataType: 'json',
       async:false
     });
-
     $.each(anggota, function( key, value ) {
       $.each(grup, function( key2, value2 ) {
         if(value2.id==value.kategori_anggota_id)
-        { value.kategori_anggota_id = value2.nama;
+        { 
+          value.kategori_anggota_id = value2.nama;
         }
       });
       $.each(provinsi, function( key3, value3 ) {
-        if(value3.id==value.anggota_daops.daops.provinsi_id)
-        { value.anggota_daops.daops.provinsi_id = value3.nama;
+        if(value3.id==value.anggota_daops.daops_id)
+        { 
+          value.anggota_daops.daops.provinsi_id = value3.nama;
         }
       });
 
