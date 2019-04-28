@@ -166,13 +166,26 @@
         }
       });
 
-      tblDaops.row.add( [
+      if(!value.pengguna){
+              tblDaops.row.add( [
               value.nama,
               value.kota_kab.provinsi_id,
-              value.pengguna.nama,
+              null,
               '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
               '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
+
+      }
+      else {
+              tblDaops.row.add( [
+              value.nama,
+              value.kota_kab.provinsi_id,
+              value.pengguna.nama ,
+              '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
+              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+      }
+
     });
 
     $("#selectProvinsi").change(function () {
