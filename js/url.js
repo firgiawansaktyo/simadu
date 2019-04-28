@@ -16,6 +16,7 @@ var urls = {
 
   pengguna:{
     list: "http://localhost:8000/siavipala/api/pengguna/list",
+    daops: "http://localhost:8000/siavipala/api/daops/list",
     create:"http://localhost:8000/siavipala/api/pengguna/create",
     delete: "http://localhost:8000/siavipala/api/pengguna/delete",
     role: "http://localhost:8000/siavipala/api/role/list"

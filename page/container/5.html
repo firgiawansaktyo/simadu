@@ -246,19 +246,19 @@
           value.kategori_anggota_id = value2.nama;
         }
       });
-      $.each(provinsi, function( key3, value3 ) {
-        if(value3.id==value.anggota_daops.daops_id)
-        { 
-          value.anggota_daops.daops.provinsi_id = value3.nama;
-        }
-      });
+      // $.each(provinsi, function( key3, value3 ) {
+      //   if(value3.id==value.anggota_daops.daops_id)
+      //   { 
+      //     value.anggota_daops.daops.provinsi_id = value3.nama;
+      //   }
+      // });
 
       tblAnggota.row.add( [
               value.nama,
               value.kategori_anggota_id,
               value.email,
               value.anggota_daops.daops.nama,
-              value.anggota_daops.daops.provinsi_id,
+              value.anggota_daops.daops.kotakab.provinsi.nama,
               '<center><a onClick="deleteAnggota(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
     });

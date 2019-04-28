@@ -75,6 +75,11 @@
           <select class="form-control" id="selectRole">
           </select>
         </div>
+        <div id="A" class="form-group">
+                <label for="daops">Daops:</label>
+                <select class="form-control" id="selectDaops">
+                </select>
+        </div>
         <div class="form-group">
           <label for="nama">Password:</label>
           <input type="password" class="form-control" required="true" id="password">
@@ -120,6 +125,17 @@
 </div> -->
 
 <script>
+
+    $("#A").hide();
+    $("#selectRole").change(function(){
+  // $("#A").hide();
+  if($(this).val() == "27"){
+    $("#A").show();
+  }else{
+    $("#A").hide(); 
+  }
+});
+
   var tblPengguna = $("#listPengguna").DataTable();
   var pengguna;
 
@@ -127,6 +143,7 @@
   // var roles;
 
   $(document).ready(function() {
+
     // $.ajax({
     //   type: 'GET',
     //   url: urls.pengguna.list,
@@ -184,6 +201,25 @@
       });
     });
   });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.anggota.daops,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        anggotadaops = response.data;
+        $.each( anggotadaops, function( key, value ) {
+          $('#selectDaops').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
 
     $.ajax({
       type: 'GET',
