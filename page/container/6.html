@@ -73,11 +73,13 @@
         <div class="form-group">
           <label for="role">Role:</label>
           <select class="form-control" id="selectRole">
+            <option value disabled selected>Pilih Role</option>
           </select>
         </div>
-        <div id="A" class="form-group">
+        <div id="PilihDaops" class="form-group">
                 <label for="daops">Daops:</label>
                 <select class="form-control" id="selectDaops">
+                  <option value disalbe selected>Pilih Daops</option>
                 </select>
         </div>
         <div class="form-group">
@@ -126,13 +128,13 @@
 
 <script>
    var tim_patroli = 27;
-    $("#A").hide();
+    $("#PilihDaops").hide();
     $("#selectRole").change(function(){
   // $("#A").hide();
   if($(this).val() == tim_patroli){
-    $("#A").show();
+    $("#PilihDaops").show();
   }else{
-    $("#A").hide(); 
+    $("#PilihDaops").hide(); 
   }
 });
 
@@ -213,7 +215,9 @@
       function (response) {
         anggotadaops = response.data;
         $.each( anggotadaops, function( key, value ) {
-          $('#selectDaops').append(new Option(value.nama,value.id));
+          if(!value.pengguna) {
+            $('#selectDaops').append(new Option(value.nama,value.id));
+          }
         });
       },
       dataType: 'json',
