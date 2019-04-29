@@ -408,9 +408,9 @@ $(document).ready(function() {
         else $('#selectProvinsi').append(new Option(value.nama,value.id));
       });
 
-      $('#selectProvinsi').val(response.data[0].id).attr('selected',true);
-      namaLokasi = response.data[0].nama;
-      idProvinsi = response.data[0].id;
+      $('#selectProvinsi').val(response.data[31].id).attr('selected',true);
+      namaLokasi = response.data[31].nama;
+      idProvinsi = response.data[31].id;
 
       $("#selectProvinsi").combobox({
         select: function (event, ui) {
@@ -708,7 +708,7 @@ $.widget( "custom.combobox", {
           value: text,
           option: this
         };
-    }).slice(0,8) );
+    }).slice(26,34) );
   },
 
   _removeIfInvalid: function( event, ui ) {
