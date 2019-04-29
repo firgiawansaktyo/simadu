@@ -18,6 +18,7 @@
                     <th width="20%">Instansi</th>
                     <th width="20%">Email</th>
                     <th width="20%">Daops</th>
+                    <th width="20%">Kota/Kab</th>
                     <th width="20%">Provinsi</th>
                     <th width="10%">Aksi</th>
                 </tr>
@@ -100,11 +101,13 @@
         <div class="form-group">
           <label for="grup">Kategori:</label>
           <select class="form-control" id="selectGrup">
+            <option value disabled selected>Pilih Kategori</option>
           </select>
         </div>
         <div class="form-group">
           <label for="anggotadaops">Daops:</label>
           <select class="form-control" id="selectDaops">
+            <option value disabled selected>Pilih Daops</option>
           </select>
         </div>
         <div class="form-group">
@@ -258,6 +261,7 @@
               value.kategori_anggota_id,
               value.email,
               value.anggota_daops.daops.nama,
+              value.anggota_daops.daops.kotakab.nama,
               value.anggota_daops.daops.kotakab.provinsi.nama,
               '<center><a onClick="deleteAnggota(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
