@@ -116,7 +116,7 @@
         </div>
         <div class="form-group">
           <label for="nama">No Telepon</label>
-          <input type="text" class="form-control" required="true" id="no_telepon">
+          <input type="text" maxlength="12" minlength="10" class="form-control phone_number" required="true" id="no_telepon">
         </div>
       </div>
       <div class="modal-footer">
@@ -164,6 +164,14 @@
 </div> -->
 
 <script>
+
+ document.querySelector(".phone_number").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+ 
   var tblAnggota = $("#listAnggota").DataTable();
   var tblDaops = $("#listDaops").DataTable();
 
