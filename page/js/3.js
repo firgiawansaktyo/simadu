@@ -708,7 +708,7 @@ $.widget( "custom.combobox", {
           value: text,
           option: this
         };
-    }).slice(26,34) );
+    }).slice(0,8) );
   },
 
   _removeIfInvalid: function( event, ui ) {

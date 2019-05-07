@@ -96,29 +96,29 @@ function loadFiles() {
    $.each(data, function( key0, value0 ) {
      $.each(value0.lokasi_patroli, function( key1, value1 ) { 
          if (value1.patroli_darat !=null){
-            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.daops.id) === -1)
-            { idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.daops.id);
-              nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.daops.nama);
-              provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama);
+            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
+            { idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.id);
+              nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
+              provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
 
-            if(idProv.indexOf(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.id) === -1)
-            { idProv.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.id);
-              nmProv.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama);
+            if(idProv.indexOf(value1.desa_kelurahan.kecamatan.kotakab.provinsi.id) === -1)
+            { idProv.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.id);
+              nmProv.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
     }
   // });
      // $.each(value0.lokasi_patroli, function( key1, value1 ) { 
         if (value1.patroli_udara != null ){
-            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.daops.id) === -1)
-            {  idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.daops.id);
-               nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.daops.nama);
-               provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama);
+            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
+            {  idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.id);
+               nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
+               provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
 
-            if(idProv.indexOf(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.id) === -1)
-            { idProv.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.id);
-              nmProv.push(value1.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama);
+            if(idProv.indexOf(value1.desa_kelurahan.kecamatan.kotakab.provinsi.id) === -1)
+            { idProv.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.id);
+              nmProv.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
     }
 
