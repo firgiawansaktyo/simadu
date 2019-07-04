@@ -1,6 +1,6 @@
 <div class="card mb-3">
   <div class="card-header">
-    <i class="fas fa-user"></i> &nbsp; Manajemen Tim Patroli
+    <i class="fas fa-user"></i> &nbsp; Manajemen Pengguna
   </div>
   <div class="card-body">
     <div class="row">
@@ -37,8 +37,8 @@
                 <tr>
                     <th width="35%">Nama</th>
                     <th width="35%">Email</th>
-                    <th width="35%">Role</th>
-                    <th>Delete</th>
+                    <th width="35%">Peran Pengguna</th>
+                    <th>Hapus</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,10 +86,14 @@
           <label for="nama">Password:</label>
           <input type="password" class="form-control" required="true" id="password">
         </div>
+        <div class="form-group">
+          <label for="nama">Confirm Password:</label>
+          <input type="password" class="form-control" required="true" id="confirm_password">
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-success" onclick="actionAddPengguna();" href="#">Save</a>
+        <a class="btn btn-success" onclick="actionAddPengguna();" href="#" >Save</a>
       </div>
     </div>
   </div>
@@ -127,6 +131,7 @@
 </div> -->
 
 <script>
+
    var tim_patroli = 27;
     $("#PilihDaops").hide();
     $("#selectRole").change(function(){
@@ -244,10 +249,15 @@
     });
 
   function actionAddPengguna() {
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+            if (password != confirmPassword) {
+                alert("Password tidak sama.");
+                return false;
+            }
     $('#penggunaModal').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
-
     $.ajax({
         type: 'POST',
         url: urls.pengguna.create,
@@ -259,6 +269,7 @@
                 password: $('#password').val()
               },
         beforeSend:
+
         function(xhr, settings) {
           xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
         },

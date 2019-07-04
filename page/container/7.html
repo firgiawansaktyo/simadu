@@ -1,10 +1,12 @@
 <div class="card mb-3">
   <div class="card-header">
-    <i class="fas fa-map-marker-alt"></i> &nbsp; Manajemen Daerah Patroli
+    <i class="fas fa-map-marker-alt"></i> &nbsp; Manajemen Daerah Operasi
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-lg-6 card-body">
+
+ <!-- Provinsi list      -->
+<!--       <div class="col-lg-6 card-body">
         <div class="card">
           <div class="card-header">
             Daftar Provinsi
@@ -23,9 +25,10 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="col-lg-6 card-body">
+<!-- Daops List -->
+      <div class="col-lg-12 card-body">
         <div class="card">
           <div class="card-header">
             Daftar Daerah Operasi
@@ -35,11 +38,9 @@
             <table id="listDaops">
               <thead>
                 <tr>
-                    <th width="35%">Nama</th>
-                    <th width="35%">Provinsi</th>
-                    <th width="35%">Ketua Patroli</th>
-                    <th>Lihat Riwayat</th>
-                    <th>Aksi</th>
+                    <th width="15%">Nama</th>
+                    <th width="15%">Ketua Daops</th>
+                    <th  width="10%">Hapus</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,6 +54,35 @@
 </div>
 
 <div class="modal fade" id="daopsModal" tabindex="-1" role="dialog" aria-labelledby="daopsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="daopsModalLabel">Tambah Daops?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" class="form-control" id="nama" required="true">
+        </div>        
+        <div class="form-group">
+          <label for="timpatroli">Ketua Patroli:</label>
+          <select class="form-control" id="selectUser">
+            <option value disabled selected>Pilih Ketua Daops</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddDaops();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Daops dulu -->
+<!-- <div class="modal fade" id="daopsModal" tabindex="-1" role="dialog" aria-labelledby="daopsModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,9 +116,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="modal fade" id="provinsiModal" tabindex="-1" role="dialog" aria-labelledby="provinsiModalLabel" aria-hidden="true">
+<!-- Tidak dipakai lagi -->
+<!-- <div class="modal fade" id="provinsiModal" tabindex="-1" role="dialog" aria-labelledby="provinsiModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -109,7 +140,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <script>
@@ -117,13 +148,32 @@
   var tblDaops = $("#listDaops").DataTable();
   var daops;
   var provinsi;
-
+  var timpatroli;
 
   $(document).ready(function() {
     var provinsi_id = null;
+
+    // $.ajax({
+    //   type: 'GET',
+    //   url: urls.provinsi.list,
+    //   beforeSend:
+    //   function(xhr, settings) {
+    //     xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+    //   },
+    //   success:
+    //   function (response) {
+    //     provinsi = response.data;
+    //     $.each( response.data, function( key, value ) {
+    //       $('#selectProvinsi').append(new Option(value.nama,value.id));
+    //     });
+    //   },
+    //   dataType: 'json',
+    //   async:false
+    // });
+
     $.ajax({
       type: 'GET',
-      url: urls.provinsi.list,
+      url: urls.pengguna.list,
       beforeSend:
       function(xhr, settings) {
         xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
@@ -141,6 +191,28 @@
 
     $.ajax({
       type: 'GET',
+      url: urls.roleuser.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        timpatroli = response.roles;
+        $.each( timpatroli, function( key, value ) {
+          $.each( value.role_user, function( key1, value1 ) {
+            if (value1.role_id === 27 )
+            $('#selectUser').append(new Option(value1.pengguna.nama,value1.pengguna.id));
+        });
+            });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+
+    $.ajax({
+      type: 'GET',
       url: urls.daops.list,
       beforeSend:
       function(xhr, settings) {
@@ -153,65 +225,85 @@
       dataType: 'json',
       async:false
     });
-    $.each(provinsi, function( key, value ) {
-      tblProvinsi.row.add( [
-              value.nama,
-              '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
-          ] ).draw( false );
-    });
 
+    // $.each(provinsi, function( key, value ) {
+    //   tblProvinsi.row.add( [
+    //           value.nama,
+    //           '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+    // });
 
-    $.each(daops, function( key, value ) {
-      $.each(provinsi, function( key2, value2 ) {
-        if(value2.id===value.kota_kab.provinsi_id)
-        { 
-          value.kota_kab.provinsi_id = value2.nama;
-        }
-      });
-
-      if(!value.pengguna){
-              tblDaops.row.add( [
-              value.nama,
-              value.kota_kab.provinsi_id,
+      $.each(daops, function( key, value ) {
+      if(!value.ketua_daops){
+      tblDaops.row.add( [
+               '<a href="#">'+value.nama+'</a>',
               null,
-              '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
-              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+                            '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
-
       }
       else {
               tblDaops.row.add( [
-              value.nama,
-              value.kota_kab.provinsi_id,
-              value.pengguna.nama ,
-              '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
-              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+              '<a href="#">'+value.nama+'</a>',
+              value.ketua_daops.nama,
+              '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
       }
-
     });
 
-    $("#selectProvinsi").change(function () {
-      provinsi_id = $("#selectProvinsi option:selected").val();
-      $.ajax({
-      type: 'GET',
-      url: urls.kotaKab.list + '/' + provinsi_id,
-      beforeSend:
-      function(xhr, settings) {
-        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
-      },
-      success:
-      function (response) {
-        $('#selectKotaKab').empty();
-        $.each( response.data, function( key, value ) {
-          $('#selectKotaKab').append(new Option(value.nama,value.id));
-          console.log($('#selectKotaKab'));
-        });
-      },
-      dataType: 'json',
-      async:false
-    });
-    });
+
+
+    // $.each(daops, function( key, value ) {
+    //   $.each(provinsi, function( key2, value2 ) {
+    //     if(value2.id===value.kota_kab.provinsi_id)
+    //     { 
+    //       value.kota_kab.provinsi_id = value2.nama;
+    //     }
+    //   });
+
+    //   if(!value.pengguna){
+    //           tblDaops.row.add( [
+    //           value.nama,
+    //           value.kota_kab.provinsi_id,
+    //           null,
+    //           '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
+    //           '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+
+    //   }
+    //   else {
+    //           tblDaops.row.add( [
+    //           value.nama,
+    //           value.kota_kab.provinsi_id,
+    //           value.pengguna.nama ,
+    //           '<center><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q='+value.nama+'"><i class="fas fa-map btn btn-primary btn-sm"></i></a></center>',
+    //           '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+    //   }
+
+    // });
+
+
+    // $("#selectProvinsi").change(function () {
+    //   provinsi_id = $("#selectProvinsi option:selected").val();
+    //   $.ajax({
+    //   type: 'GET',
+    //   url: urls.kotaKab.list + '/' + provinsi_id,
+    //   beforeSend:
+    //   function(xhr, settings) {
+    //     xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+    //   },
+    //   success:
+    //   function (response) {
+    //     $('#selectKotaKab').empty();
+    //     $.each( response.data, function( key, value ) {
+    //       $('#selectKotaKab').append(new Option(value.nama,value.id));
+    //       console.log($('#selectKotaKab'));
+    //     });
+    //   },
+    //   dataType: 'json',
+    //   async:false
+    // });
+    // });
 
   });
 
@@ -223,7 +315,7 @@
     $.ajax({
         type: 'POST',
         url: urls.daops.create,
-        data: { kota_kab_id: $("#selectKotaKab option:selected").val(), nama: $('#nama').val() },
+        data: {  nama: $('#nama').val(), ketua_id: $("#selectUser option:selected").val() },
         beforeSend:
         function(xhr, settings) {
           xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
@@ -237,28 +329,28 @@
       });
   }
 
-  function actionAddProvinsi() {
-    $('#provinsiModal').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+  // function actionAddProvinsi() {
+  //   $('#provinsiModal').modal('hide');
+  //   $('body').removeClass('modal-open');
+  //   $('.modal-backdrop').remove();
 
-    $.ajax({
-        type: 'POST',
-        url: urls.provinsi.create,
-        data: { 
-          nama: $('#namaProvinsi').val() },
-        beforeSend:
-        function(xhr, settings) {
-          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
-        },
-        success:
-        function (response) {
-          navbarClick(7);
-        },
-        dataType: 'json',
-        async:false
-      });
-  }
+  //   $.ajax({
+  //       type: 'POST',
+  //       url: urls.provinsi.create,
+  //       data: { 
+  //         nama: $('#namaProvinsi').val() },
+  //       beforeSend:
+  //       function(xhr, settings) {
+  //         xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+  //       },
+  //       success:
+  //       function (response) {
+  //         navbarClick(7);
+  //       },
+  //       dataType: 'json',
+  //       async:false
+  //     });
+  // }
 
   function deleteDaops(val) {
     if (confirm("Hapus Daops?")){
@@ -280,26 +372,26 @@
 
     }
   }
-  function deleteProvinsi(val) {
-    if (confirm("Hapus Provinsi?")){
-      $.ajax({
-          type: 'POST',
-          url: urls.provinsi.delete,
-          data: { id: val },
-          beforeSend:
-          function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
-          },
-        success:
-        function (response) {
-          navbarClick(7);
-        },
-        dataType: 'json',
-        async:false
-        });
+  // function deleteProvinsi(val) {
+  //   if (confirm("Hapus Provinsi?")){
+  //     $.ajax({
+  //         type: 'POST',
+  //         url: urls.provinsi.delete,
+  //         data: { id: val },
+  //         beforeSend:
+  //         function(xhr, settings) {
+  //           xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+  //         },
+  //       success:
+  //       function (response) {
+  //         navbarClick(7);
+  //       },
+  //       dataType: 'json',
+  //       async:false
+  //       });
 
-    }
-  }
+  //   }
+  // }
 
 
 

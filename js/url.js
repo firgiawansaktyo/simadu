@@ -7,7 +7,8 @@ var urls = {
     laporan:"http://localhost:8000/siavipala/api/patroli/unduh-laporan"
   },
   anggota:{
-    list: "http://localhost:8000/siavipala/api/anggota-daops/list",
+    // list: "http://localhost:8000/siavipala/api/anggota-daops/list",
+    list: "http://localhost:8000/siavipala/api/anggota/list",
     kategori: "http://localhost:8000/siavipala/api/kategori-anggota/list",
     daops: "http://localhost:8000/siavipala/api/daops/list",
     create:"http://localhost:8000/siavipala/api/anggota/create",

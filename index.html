@@ -15,6 +15,21 @@
   <link href="./css/sb-admin.css" rel="stylesheet">
   <link href="./css/custom.css" rel="stylesheet">
 
+  <style>
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    position: absolute;
+    margin-left: -65px;
+    /*margin-top: 8px;*/
+    width: 250px;
+    border-color: #343a40;
+}
+.profile {
+    text-decoration: none !important;
+}
+
+  </style>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
@@ -63,10 +78,10 @@
             <span class="nav-link-text">Rekapitulasi Patroli</span>
           </a>
         </li>
-        <li id="nav5" onclick="navbarClick(5);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Tim Patroli">
+        <li id="nav5" onclick="navbarClick(5);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Anggota Patroli">
           <a class="nav-link" href="#">
             <i class="fas fa-user-friends"></i>
-            <span class="nav-link-text">Manajemen Tim Patroli</span>
+            <span class="nav-link-text">Manajemen Anggota Patroli</span>
           </a>
         </li>
         <li id="nav6" onclick="navbarClick(6);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Pengguna">
@@ -75,10 +90,10 @@
             <span class="nav-link-text">Manajemen Pengguna</span>
           </a>
         </li>
-        <li id="nav7" onclick="navbarClick(7);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Daerah">
+        <li id="nav7" onclick="navbarClick(7);" class="nav-item" data-toggle="tooltip" data-placement="right" title="Manajemen Daerah Operasi">
           <a class="nav-link" href="#">
             <i class="fas fa-map-marker-alt"></i>
-            <span class="nav-link-text">Manajemen Daerah Patroli</span>
+            <span class="nav-link-text">Manajemen Daops</span>
           </a>
         </li>
       </ul>
@@ -92,9 +107,29 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li id="userDetail" class="navbar-text d-none">
+        <li id="userDetail" class="navbar-text d-none dropdown">
           <i class="fas fa-user-alt"></i> &nbsp; Hai, RAMDAN &nbsp; &nbsp;
         </li>
+<!--                 <li id="userDetail" class="navbar-text d-none dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="fas fa-user-alt"></span> 
+                        <strong>Nombre</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p class="text-center">
+                                            <span class="fas fa-user-alt"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <p class="text-center"><strong>Nombre Apellido</strong></p>
+                                        <p class="text-center small">correoElectronico@email.com</p>
+                    </ul>
+                </li> -->  
         <li id="loginButton" class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#loginModal" onclick="actionLogin(0);">
             <i class="fas fa-sign-in-alt"></i> Login</a>
@@ -174,8 +209,25 @@
       // $('#nav7').removeClass("d-none");
       $('#loginButton').addClass("d-none");
       $('#logoutButton').removeClass("d-none");
+      $('#detailButton').removeClass("d-none");
       $('#userDetail').removeClass("d-none");
-      $('#userDetail').html('<i class="fas fa-user-alt"></i> &nbsp; Hai, '+localStorage.getItem("user")+' &nbsp; &nbsp;');
+      $('#userDetail').html(
+        // '<i class="fas fa-user-alt"></i> &nbsp; Hai, '+localStorage.getItem("user")+' &nbsp; &nbsp;'+
+                    '<a href="#" class="dropdown profile" data-toggle="dropdown">'+
+                        '<span class="fas fa-user-alt"></span>'+ 
+                        '<strong> &nbsp; Hai, '+localStorage.getItem("user")+'</strong>'+
+                        '<span class="glyphicon glyphicon-chevron-down"></span>&nbsp; &nbsp; '+
+                    '</a>'+
+                    '<ul class="dropdown-menu">'+
+                        '<li>'+
+                            '<div class="navbar-login">'+
+                                '<div class="row">'+
+                                    '<div class="col-lg-12">'+
+                                        '<p class="text-center"><strong>'+localStorage.getItem("user") +' &nbsp;- &nbsp;'+localStorage.getItem("userrole")+'</strong></p>'+
+                                        '<p class="text-center ">'+localStorage.getItem("useremail") +'</p>'+
+                    '</ul>'
+
+        );
     }
     else
     { 
@@ -211,12 +263,17 @@
         success:
         function (response) {
           localStorage.setItem("token",response.data.token);
-          localStorage.setItem("user",response.data.user[0].nama);
+          localStorage.setItem("user",response.data.user.nama);
+          localStorage.setItem("useremail",response.data.user.email);
+        $.each( response.data.user.role_user, function( key, value ) {
+          localStorage.setItem("userrole",value.role.display_name);
+        });
 
         },
         dataType: 'json',
         async:false
       });
+
 
       if(localStorage.getItem("token")!=null) location.reload();
       else $("#loginLabel").removeClass("d-none");

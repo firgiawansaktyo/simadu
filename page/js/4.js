@@ -5,8 +5,8 @@ var today = $.format.date(new Date(), "yyyy-MM-dd");
 var data;
 var tblDownload =$("#listFile").DataTable();
 var tblRekap    =$("#listProvinsi").DataTable();
-var idDaops  = [];
-var nmDaops  = [];
+var idKotakab  = [];
+var nmKotakab  = [];
 var provinsi = [];
 
 var idProv   = [];
@@ -39,8 +39,8 @@ $(document).ready(function() {
 });
 
 function loadFiles() {
-  idDaops  = [];
-  nmDaops  = [];
+  idKotakab  = [];
+  nmKotakab  = [];
   idProv   = [];
   provinsi = [];
   tblDownload.clear().draw();
@@ -96,9 +96,9 @@ function loadFiles() {
    $.each(data, function( key0, value0 ) {
      $.each(value0.lokasi_patroli, function( key1, value1 ) { 
          if (value1.patroli_darat !=null){
-            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
-            { idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.id);
-              nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
+            if(idKotakab.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
+            { idKotakab.push(value1.desa_kelurahan.kecamatan.kotakab.id);
+              nmKotakab.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
               provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
 
@@ -110,9 +110,9 @@ function loadFiles() {
   // });
      // $.each(value0.lokasi_patroli, function( key1, value1 ) { 
         if (value1.patroli_udara != null ){
-            if(idDaops.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
-            {  idDaops.push(value1.desa_kelurahan.kecamatan.kotakab.id);
-               nmDaops.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
+            if(idKotakab.indexOf(value1.desa_kelurahan.kecamatan.kotakab.id) === -1)
+            {  idKotakab.push(value1.desa_kelurahan.kecamatan.kotakab.id);
+               nmKotakab.push(value1.desa_kelurahan.kecamatan.kotakab.nama);
                provinsi.push(value1.desa_kelurahan.kecamatan.kotakab.provinsi.nama);
             }
 
@@ -136,24 +136,24 @@ function loadFiles() {
       );
   }
 
-  $.each(idDaops, function( key, value ) {
+  $.each(idKotakab, function( key, value ) {
     if(key<5)
     { $("#card"+(key+1)).html(
         '<div class="card-header">'+
         '<i class="fa fa-fw fa-file-pdf fa-5x text-danger btn enabled" onClick="donlot(\''+today+'\',\''+value+'\')"></i>'+
         '</div>'+
         '<div class="card-body">'+
-        '<p class="card-text">'+today+' - '+nmDaops[key]+' - '+
+        '<p class="card-text">'+today+' - '+nmKotakab[key]+' - '+
         provinsi[key]+'</p>'+
         '</div>'
       );
     }
 
     tblDownload.row.add( [
-        nmDaops[key],
+        nmKotakab[key],
         provinsi[key],
         '<center><i class="fas fa-file-download btn btn-danger btn-sm" onClick="donlot(\''+today+'\',\''+value+'\')"></i></center>',
-        '<center><i class="fas fa-map btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModal" onClick="history(\''+value+'\',\''+nmDaops[key]+'\')"></i></center>'
+        '<center><i class="fas fa-map btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModal" onClick="history(\''+value+'\',\''+nmKotakab[key]+'\')"></i></center>'
     ] ).draw( false );
 
   });
@@ -168,9 +168,9 @@ function loadFiles() {
 
 }
 
-function history(idDaops, namaDaops) {
+function history(idKotakab, namaKotakab) {
   tblRekap.clear().draw();
-  $('#detailModalLabel').html('Riwayat Patroli Daops '+namaDaops);
+  $('#detailModalLabel').html('Riwayat Patroli Kotakab '+namaKotakab);
 
   $.ajax({
     type: 'GET',
@@ -187,19 +187,19 @@ function history(idDaops, namaDaops) {
       spots.patroliToday.darat = [];
       spots.patroliToday.udara = [];
       $.each(response.data, function(key, value) {
-          if(value.patroli_darat.length>0 && value.patroli_darat[0].desa_kelurahan.kecamatan.kotakab.daops.id==idDaops)
+          if(value.patroli_darat.length>0 && value.patroli_darat[0].desa_kelurahan.kecamatan.kotakab.id==idKotakab)
           { spots.patroliToday.darat.push(value.patroli_darat);
             spots.patroli.push(value);
             $('#jml-darat').html(": "+spots.patroliToday.darat.length+' Titik');
           }
-          if(value.patroli_udara.length>0 && value.patroli_udara[0].desa_kelurahan.kecamatan.kotakab.daops.id==idDaops)
+          if(value.patroli_udara.length>0 && value.patroli_udara[0].desa_kelurahan.kecamatan.kotakab.id==idKotakab)
           { spots.patroliToday.udara.push(value.patroli_udara);
             spots.patroli.push(value);
             $('#jml-udara').html(": "+spots.patroliToday.udara.length+' Titik');
           }
         });
 
-        $.get("https://maps.googleapis.com/maps/api/geocode/json?language=ID&address="+namaDaops+"&key="+APIKey, function(data){
+        $.get("https://maps.googleapis.com/maps/api/geocode/json?language=ID&address="+namaKotakab+"&key="+APIKey, function(data){
             latLng = data.results[0].geometry.location;
             initMap();
             console.log(spots);
@@ -225,7 +225,7 @@ function donlot(tgl,id) {
   };
 
   try {
-      xhr.open('GET', API.patroli.childs.laporan.url+'?tanggal='+tgl+'&daops='+id+'&load=pdf', true);
+      xhr.open('GET', API.patroli.childs.laporan.url+'?tanggal='+tgl+'&kotakab='+id+'&load=pdf', true);
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
       xhr.responseType = 'blob';
@@ -288,7 +288,7 @@ function initMap() {
               '<tr>'+
                 '<td>Provinsi</td>'+
                 '<td>&nbsp; : &nbsp;</td>'+
-                '<td>'+value.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama+'</td>'+
+                '<td>'+value.desa_kelurahan.kecamatan.kotakab.provinsi.nama+'</td>'+
               '</tr>'+
               '<tr>'+
                 '<td>Kota/Kab</td>'+
@@ -308,7 +308,7 @@ function initMap() {
               '<tr>'+
                 '<td>Daerah Operasi</td>'+
                 '<td>&nbsp; : &nbsp;</td>'+
-                '<td>'+value.desa_kelurahan.kecamatan.kotakab.daops.nama+'</td>'+
+                '<td>'+value.desa_kelurahan.kecamatan.kotakab.nama+'</td>'+
               '</tr>'+
               '<tr>'+
                 '<td>Kondisi Pantauan</td>'+
@@ -344,7 +344,7 @@ function initMap() {
               '<tr>'+
                 '<td>Provinsi</td>'+
                 '<td>&nbsp; : &nbsp;</td>'+
-                '<td>'+value.desa_kelurahan.kecamatan.kotakab.daops.provinsi.nama+'</td>'+
+                '<td>'+value.desa_kelurahan.kecamatan.kotakab.provinsi.nama+'</td>'+
               '</tr>'+
               '<tr>'+
                 '<td>Kota/Kab</td>'+
@@ -364,7 +364,7 @@ function initMap() {
               '<tr>'+
                 '<td>Daerah Operasi</td>'+
                 '<td>&nbsp; : &nbsp;</td>'+
-                '<td>'+value.desa_kelurahan.kecamatan.kotakab.daops.nama+'</td>'+
+                '<td>'+value.desa_kelurahan.kecamatan.kotakab.nama+'</td>'+
               '</tr>'+
               '<tr>'+
                 '<td>Radius Operasi</td>'+
