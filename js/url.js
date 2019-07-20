@@ -32,10 +32,23 @@ var urls = {
   kotaKab:{
     list:"http://localhost:8000/siavipala/api/kotakab/list",
   },
+  kecamatan:{
+    list:"http://localhost:8000/siavipala/api/kecamatan/list",
+  },
+  desakelurahan:{
+    list:"http://localhost:8000/siavipala/api/desakelurahan/list",
+  },
   daops:{
     list: "http://localhost:8000/siavipala/api/daops/list",
     create: "http://localhost:8000/siavipala/api/daops/create",
-    delete: "http://localhost:8000/siavipala/api/daops/delete"
+    delete: "http://localhost:8000/siavipala/api/daops/delete",
+    desa:"http://localhost:8000/siavipala/api/daops/add-desa"
+  },
+  regu:{
+    list: "http://localhost:8000/siavipala/api/regu/list",
+    create: "http://localhost:8000/siavipala/api/regu/create",
+    delete: "http://localhost:8000/siavipala/api/regu/delete",
+    anggota:"http://localhost:8000/siavipala/api/regu/add-anggota"
   },
   roleuser:{
     list: "http://localhost:8000/siavipala/api/role-user/list",

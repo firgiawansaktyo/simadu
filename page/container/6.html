@@ -76,12 +76,12 @@
             <option value disabled selected>Pilih Role</option>
           </select>
         </div>
-        <div id="PilihDaops" class="form-group">
+<!--         <div id="PilihDaops" class="form-group">
                 <label for="daops">Daops:</label>
                 <select class="form-control" id="selectDaops">
                   <option value disabled selected>Pilih Daops</option>
                 </select>
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="nama">Password:</label>
           <input type="password" class="form-control" required="true" id="password">
@@ -265,7 +265,7 @@
                 nama: $('#namaPengguna').val(),
                 email: $('#email').val(),
                 role_id: $("#selectRole option:selected").val(),
-                daops_id:$("#selectDaops option:selected").val(),
+                // daops_id:$("#selectDaops option:selected").val(),
                 password: $('#password').val()
               },
         beforeSend:

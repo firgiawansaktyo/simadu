@@ -1,3 +1,10 @@
+<style type="text/css">
+  .float-right {
+    margin-left: 10px;
+    float: right!important;
+}
+
+</style>
 <div class="card mb-3">
   <div class="card-header">
     <i class="fas fa-map-marker-alt"></i> &nbsp; Manajemen Daerah Operasi
@@ -32,14 +39,26 @@
         <div class="card">
           <div class="card-header">
             Daftar Daerah Operasi
-            <a target="#"  data-toggle="modal" data-target="#daopsModal" class="btn btn-primary btn-sm float-right text-white">Tambah Daops</a>
+            <div class="tambah-daops">
+            <a target="#" data-toggle="modal" data-target="#daopsModal" class="btn btn-primary btn-sm float-right text-white">Tambah Daops</a></div>
+            <div class="tambah-desa">
+            <a target="#" data-toggle="modal" data-target="#daopsdesaModal" class="btn btn-primary btn-sm float-right text-white">Tambah Desa ke Daops</a> </div>
           </div>
           <div class="card-body">
-            <table id="listDaops">
+            <table id="listDaops"  style="width:100%">
               <thead>
                 <tr>
-                    <th width="15%">Nama</th>
-                    <th width="15%">Ketua Daops</th>
+                    <th width="10%">Nama</th>
+                    <th width="10%">Ketua Daops</th>
+                    <!-- <th width="10%">Kadaops Email</th> -->
+                    <th width="10%">Desa</th>
+                    <th width="10%">Kecamatan</th>
+                    <th width="10%">Kab/Kot</th>
+                    <th width="10%">Provinsi</th>
+                    <th width="10%">Regu</th>
+                    <th width="10%">Anggota</th>
+                    <!-- <th width="10%">Anggota Email</th> -->
+                    <!-- <th width="10%">Anggota No Telepon</th> -->
                     <th  width="10%">Hapus</th>
                 </tr>
               </thead>
@@ -49,6 +68,37 @@
           </div>
         </div>
       </div>
+<!-- Regu List -->
+      <div class="col-lg-12 card-body">
+        <div class="card">
+          <div class="card-header">
+            Daftar Regu
+            <div class="tambah-regu">
+            <a target="#" data-toggle="modal" data-target="#reguModal" class="btn btn-primary btn-sm float-right text-white">Tambah Regu</a></div>
+            <div class="tambah-anggota">
+            <a target="#" data-toggle="modal" data-target="#reguanggotaModal" class="btn btn-primary btn-sm float-right text-white">Tambah Anggota ke Regu</a> </div>
+          </div>
+          <div class="card-body">
+            <table id="listRegu"  style="width:100%">
+              <thead>
+                <tr>
+                  <th width="10%">Nama Regu</th>
+                    <th width="10%">Ketua Regu</th>
+                    <th width="10%">Email Ketua</th>
+                    <th width="10%">Daops</th>
+                    <th width="10%">Anggota</th>
+                    <th width="10%">Email Anggota</th>
+                    <th width="10%">Anggota No. Telp</th>
+                    <th width="10%">Instansi</th>
+                    <th  width="10%">Hapus</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>     
     </div>
   </div>
 </div>
@@ -68,7 +118,7 @@
           <input type="text" class="form-control" id="nama" required="true">
         </div>        
         <div class="form-group">
-          <label for="timpatroli">Ketua Patroli:</label>
+          <label for="timpatroli">Ketua Daops:</label>
           <select class="form-control" id="selectUser">
             <option value disabled selected>Pilih Ketua Daops</option>
           </select>
@@ -77,6 +127,121 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         <a class="btn btn-success" onclick="actionAddDaops();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="daopsdesaModal" tabindex="-1" role="dialog" aria-labelledby="daopsdesaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="daopsModalLabel">Tambah Desa ke Daops?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="daops">Daops:</label>
+          <select class="form-control" id="selectDaops">
+            <option value disabled selected>Pilih Daops</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="provinsi">Provinsi:</label>
+          <select class="form-control" id="selectProvinsi">
+            <option value disabled selected>Pilih Provinsi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="kotakab">Kota/Kabupaten:</label>
+          <select class="form-control" id="selectKotaKab">
+            <option value disabled selected>Pilih Kabupaten</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="kecamatan">Kecamatan:</label>
+          <select class="form-control" id="selectKecamatan">
+            <option value disabled selected>Pilih Kecamatan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="desakelurahan">Desa Kelurahan:</label>
+          <select class="form-control" id="selectDesakelurahan">
+            <option value disabled selected>Pilih Desa Kelurahan</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddDesaDaops();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reguModal" tabindex="-1" role="dialog" aria-labelledby="reguModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reguModalLabel">Tambah Regu?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nama">Nama Regu:</label>
+          <input type="text" class="form-control" id="namaregu" required="true">
+        </div>        
+        <div class="form-group">
+          <label for="timpatroli">Ketua Regu:</label>
+          <select class="form-control" id="selectreguUser">
+            <option value disabled selected>Pilih Ketua Regu</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="daops">Daops:</label>
+          <select class="form-control" id="selectreguDaops">
+            <option value disabled selected>Pilih Daops</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddRegu();" href="#">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reguanggotaModal" tabindex="-1" role="dialog" aria-labelledby="reguanggotaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reguanggotaModalLabel">Tambah Anggota Regu?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">       
+        <div class="form-group">
+          <label for="regu">Pilih Regu:</label>
+          <select class="form-control" id="selectRegu">
+            <option value disabled selected>Pilih Regu</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="anggota">Anggota:</label>
+          <select class="form-control" id="selectAnggota">
+            <option value disabled selected>Pilih Anggota</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success" onclick="actionAddAnggotaRegu();" href="#">Save</a>
       </div>
     </div>
   </div>
@@ -145,31 +310,46 @@
 
 <script>
   var tblProvinsi = $("#listProvinsi").DataTable();
-  var tblDaops = $("#listDaops").DataTable();
+  var tblRegu = $("#listRegu").DataTable();
+  var table = $("#listDaops").DataTable(
+  // {
+  //     "columns": [
+  //   { className: "details-control" },
+  //   null,
+  //   null,
+  //   null,
+  //   null,
+  //   null,
+  //   null,
+  //   null,
+  //   null
+  // ]
+  // }
+  );
   var daops;
   var provinsi;
   var timpatroli;
-
+  var regu;
+  var anggota;
   $(document).ready(function() {
-    var provinsi_id = null;
 
-    // $.ajax({
-    //   type: 'GET',
-    //   url: urls.provinsi.list,
-    //   beforeSend:
-    //   function(xhr, settings) {
-    //     xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
-    //   },
-    //   success:
-    //   function (response) {
-    //     provinsi = response.data;
-    //     $.each( response.data, function( key, value ) {
-    //       $('#selectProvinsi').append(new Option(value.nama,value.id));
-    //     });
-    //   },
-    //   dataType: 'json',
-    //   async:false
-    // });
+    $.ajax({
+      type: 'GET',
+      url: urls.provinsi.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        provinsi = response.data;
+        $.each( response.data, function( key, value ) {
+          $('#selectProvinsi').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
 
     $.ajax({
       type: 'GET',
@@ -182,7 +362,7 @@
       function (response) {
         provinsi = response.data;
         $.each( response.data, function( key, value ) {
-          $('#selectProvinsi').append(new Option(value.nama,value.id));
+          $('#selectPengguna').append(new Option(value.nama,value.id));
         });
       },
       dataType: 'json',
@@ -201,8 +381,10 @@
         timpatroli = response.roles;
         $.each( timpatroli, function( key, value ) {
           $.each( value.role_user, function( key1, value1 ) {
-            if (value1.role_id === 27 )
+            if (value1.role_id === 27 ){
             $('#selectUser').append(new Option(value1.pengguna.nama,value1.pengguna.id));
+            $('#selectreguUser').append(new Option(value1.pengguna.nama,value1.pengguna.id));
+          }
         });
             });
       },
@@ -221,11 +403,50 @@
       success:
       function (response) {
         daops = response.data
+        $.each( response.data, function( key, value ) {
+          $('#selectDaops').append(new Option(value.nama,value.id));
+          $('#selectreguDaops').append(new Option(value.nama,value.id));
+        });
       },
       dataType: 'json',
       async:false
     });
 
+    $.ajax({
+      type: 'GET',
+      url: urls.regu.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        regu = response.data
+        $.each( response.data, function( key, value ) {
+          $('#selectRegu').append(new Option(value.name,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: urls.anggota.list,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        anggota = response.data
+        $.each( response.data, function( key, value ) {
+          $('#selectAnggota').append(new Option(value.nama,value.id));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
     // $.each(provinsi, function( key, value ) {
     //   tblProvinsi.row.add( [
     //           value.nama,
@@ -233,24 +454,154 @@
     //       ] ).draw( false );
     // });
 
+//Baru
+    //   $.each(daops, function( key, value ) {
+    //   if(!value.ketua_daops){
+    //   tblDaops.row.add( [
+    //           '<a href="#">'+value.nama+'</a>',
+    //           null,
+    //           '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+    //   }
+    //   else {
+    //           tblDaops.row.add( [
+    //           '<a href="#">'+value.nama+'</a>',
+    //           value.ketua_daops.nama,
+    //           '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+    //       ] ).draw( false );
+    //   }
+    // });
+
+//Multiple Value
       $.each(daops, function( key, value ) {
       if(!value.ketua_daops){
-      tblDaops.row.add( [
-               '<a href="#">'+value.nama+'</a>',
+      table.row.add( [
+             value.nama,
               null,
-                            '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              // null,
+              // null,
+              // null,
+              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
       }
       else {
-              tblDaops.row.add( [
-              '<a href="#">'+value.nama+'</a>',
+        var desakelurahan = "";
+        var kecamatantbl= "";
+        var kabkottbl= "";
+        var provinsitbl= "";
+        var regutbl= "";
+        var anggotatbl= "";
+        var ketuadaopsemail="";
+        var anggotaemaiiltbl= "";
+        var anggotanotelptbl= ""; 
+        $.each(value.daops_desa, function( key1, value1 ) {
+          desakelurahan =  desakelurahan + value1.desa_kelurahan.nama + '<br>'
+          kecamatantbl = value1.desa_kelurahan.kecamatan.nama
+          kabkottbl = value1.desa_kelurahan.kecamatan.kota_kab.nama
+          provinsitbl = value1.desa_kelurahan.kecamatan.kota_kab.provinsi.nama
+          ketuadaopsemail= ketuadaopsemail + value.ketua_daops.email
+        });
+          $.each(value.regu, function( key2, value2 ) {
+            regutbl = regutbl + value2.name + '<br>'
+            $.each(value2.anggota, function( key3, value3 ) {
+            anggotatbl = anggotatbl + value3.nama + '<br>'
+            anggotaemaiiltbl = anggotaemaiiltbl + value3.email + '<br>'
+            anggotanotelptbl = anggotanotelptbl + value3.no_telepon + '<br>'
+          });
+        });
+
+              table.row.add( [
+              value.nama,
               value.ketua_daops.nama,
-              '<center><a onClick="deleteProvinsi(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+              // value.ketua_daops.email,
+              desakelurahan,
+              kecamatantbl,
+              kabkottbl,
+              provinsitbl,
+              regutbl,
+              anggotatbl,
+              // anggotaemaiiltbl,
+              // anggotanotelptbl,
+              '<center><a onClick="deleteDaops(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
           ] ).draw( false );
+      
       }
+       
     });
 
+      $.each(regu, function( key, value ) {
+      if(!value.anggota){
+      tblRegu.row.add( [
+             value.name,
+              value.ketua_regu.nama,
+              value.ketua_regu.email,
+              value.daops.nama,
+              null,
+              null,
+              null,
+              null,
+              '<center><a onClick="deleteRegu(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+      }
+      else {
+        var anggotaregutbl= "";
+        var anggotareguemaiiltbl= "";
+        var anggotaregunotelptbl= "";
+        var anggotareguinstansitbl= ""; 
+            $.each(value.anggota, function( key1, value1 ) {
+            anggotaregutbl = anggotaregutbl + value1.nama + '<br>'
+            anggotareguemaiiltbl = anggotareguemaiiltbl + value1.email + '<br>'
+            anggotaregunotelptbl = anggotaregunotelptbl + value1.no_telepon + '<br>'
+            anggotareguinstansitbl = anggotareguinstansitbl + value1.kategori_anggota.nama + '<br>'
+          });
 
+            tblRegu.row.add( [
+             value.name,
+              value.ketua_regu.nama,
+              value.ketua_regu.email,
+              value.daops.nama,
+              anggotaregutbl,
+              anggotareguemaiiltbl,
+              anggotaregunotelptbl,
+              anggotareguinstansitbl,
+              '<center><a onClick="deleteRegu(\''+value.id+'\');"><i class="fas fa-trash btn btn-danger btn-sm"></i></a></center>'
+          ] ).draw( false );
+      
+      }
+       
+    });
+//row details
+    // $('#listDaops tbody').on('click', 'td.details-control', function () {
+    //     var tr = $(this).closest('tr');
+    //     var row = table.row( tr );
+ 
+    //     if ( row.child.isShown() ) {
+    //         // This row is already open - close it
+    //         row.child.hide();
+    //         tr.removeClass('shown');
+    //     }
+    //     else {
+    //         // Open this row
+    //         row.child( format(row.data()) ).show();
+    //         tr.addClass('shown');
+    //     }
+    // } );
+
+// function format ( d ) {
+//     // `d` is the original data object for the row
+//     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+//         '<tr>'+
+//             '<td>Info Tambahan:</td>'+
+//             '<td>'+d.ketuadaopsemail+'</td>'+
+//         '</tr>'+
+//     '</table>';
+// }
 
     // $.each(daops, function( key, value ) {
     //   $.each(provinsi, function( key2, value2 ) {
@@ -281,29 +632,75 @@
     //   }
 
     // });
+var provinsi_id = null;
+var kota_kab_id = null;
+var kecamatan_id = null;
 
+    $("#selectProvinsi").change(function () {
+      provinsi_id = $("#selectProvinsi option:selected").val();
+      $.ajax({
+      type: 'GET',
+      url: urls.kotaKab.list + '/' + provinsi_id,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        $('#selectKotaKab').empty();
+        $.each( response.data, function( key, value ) {
+          $('#selectKotaKab').append(new Option(value.nama,value.id));
+          console.log($('#selectKotaKab'));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+    });
 
-    // $("#selectProvinsi").change(function () {
-    //   provinsi_id = $("#selectProvinsi option:selected").val();
-    //   $.ajax({
-    //   type: 'GET',
-    //   url: urls.kotaKab.list + '/' + provinsi_id,
-    //   beforeSend:
-    //   function(xhr, settings) {
-    //     xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
-    //   },
-    //   success:
-    //   function (response) {
-    //     $('#selectKotaKab').empty();
-    //     $.each( response.data, function( key, value ) {
-    //       $('#selectKotaKab').append(new Option(value.nama,value.id));
-    //       console.log($('#selectKotaKab'));
-    //     });
-    //   },
-    //   dataType: 'json',
-    //   async:false
-    // });
-    // });
+    $("#selectKotaKab").change(function () {
+      kota_kab_id = $("#selectKotaKab option:selected").val();
+      $.ajax({
+      type: 'GET',
+      url: urls.kecamatan.list + '/' + kota_kab_id,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        $('#selectKecamatan').empty();
+        $.each( response.data, function( key, value ) {
+          $('#selectKecamatan').append(new Option(value.nama,value.id));
+          console.log($('#selectKecamatan'));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+    });
+
+    $("#selectKecamatan").change(function () {
+      kecamatan_id = $("#selectKecamatan option:selected").val();
+      $.ajax({
+      type: 'GET',
+      url: urls.desakelurahan.list + '/' + kecamatan_id,
+      beforeSend:
+      function(xhr, settings) {
+        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+      },
+      success:
+      function (response) {
+        $('#selectDesakelurahan').empty();
+        $.each( response.data, function( key, value ) {
+          $('#selectDesakelurahan').append(new Option(value.nama,value.id));
+          console.log($('#selectDesakelurahan'));
+        });
+      },
+      dataType: 'json',
+      async:false
+    });
+    });
 
   });
 
@@ -329,6 +726,70 @@
       });
   }
 
+  function actionAddDesaDaops() {
+    $('#daopsdesaModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    $.ajax({
+        type: 'POST',
+        url: urls.daops.desa,
+        data: {  daops_id: $("#selectDaops option:selected").val(), desa_kelurahan_id: [$("#selectDesakelurahan option:selected").val()]  },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+ function actionAddRegu() {
+    $('#reguModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.regu.create,
+        data: {  name: $('#namaregu').val(), ketua_id: $("#selectreguUser option:selected").val(), daops_id: $("#selectreguDaops option:selected").val() },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
+
+ function actionAddAnggotaRegu() {
+    $('#reguanggotaModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    $.ajax({
+        type: 'POST',
+        url: urls.regu.anggota,
+        data: {  regu_id: $("#selectRegu option:selected").val(), anggota_id: [$("#selectAnggota option:selected").val()] },
+        beforeSend:
+        function(xhr, settings) {
+          xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+        },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+      });
+  }
   // function actionAddProvinsi() {
   //   $('#provinsiModal').modal('hide');
   //   $('body').removeClass('modal-open');
@@ -357,6 +818,27 @@
       $.ajax({
           type: 'POST',
           url: urls.daops.delete,
+          data: { id: val },
+          beforeSend:
+          function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("token"));
+          },
+        success:
+        function (response) {
+          navbarClick(7);
+        },
+        dataType: 'json',
+        async:false
+        });
+
+    }
+  }
+
+  function deleteRegu(val) {
+    if (confirm("Hapus Regu?")){
+      $.ajax({
+          type: 'POST',
+          url: urls.regu.delete,
           data: { id: val },
           beforeSend:
           function(xhr, settings) {
